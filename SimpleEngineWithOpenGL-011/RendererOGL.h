@@ -1,0 +1,41 @@
+#pragma once
+#include <vector>
+
+#include "IRenderer.h"
+#include "Log.h"
+#include "VertexArray.h"
+#include "Vector2.h"
+#include "Shader.h"
+
+class RendererOGL :
+    public IRenderer
+{
+public:
+    RendererOGL();
+    virtual ~RendererOGL();
+	RendererOGL(const RendererOGL&) = delete;
+    RendererOGL& operator = (const RendererOGL&) = delete;
+
+    bool initialize(Window& windowP);
+    void beginDraw() override;
+    void draw() override;
+    void endDraw() override;
+    void close() override;
+
+    void addSprite(class SpriteComponent* sprite);
+    void removeSprite(class SpriteComponent* sprite);
+    void drawSprite(const Actor&, const Texture& tex, Rectangle srcRect, Vector2 origin, Flip flip) const override;
+
+    IRenderer::Type type() { return Type::OGL; }
+
+private:
+    void drawSprites();
+
+    Shader* shader;
+    Window* window;
+    VertexArray* vertexArray;
+    SDL_GLContext context;
+    std::vector<class SpriteComponent*> sprites;
+
+};
+
