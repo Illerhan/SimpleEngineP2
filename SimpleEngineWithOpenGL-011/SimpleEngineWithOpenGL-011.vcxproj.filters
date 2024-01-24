@@ -161,13 +161,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Basic.frag">
+    <None Include="Res\Shaders\Basic.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Basic.vert">
+    <None Include="Res\Shaders\Basic.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Transform.vert">
+    <None Include="Res\Shaders\Transform.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Res\Shaders\Sprite.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Res\Shaders\Sprite.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

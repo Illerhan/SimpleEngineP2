@@ -18,7 +18,9 @@ bool Game::initialize()
 void Game::load()
 {
 	// Load textures
-	Assets::loadShader("Res\Shader\Transform.vert","Red\Shaders\Basic.frag", "", "", "","Transform");
+
+	Assets::loadShader("Res\\Shaders\\Transform.vert","Res\\Shaders\\Basic.frag", "", "", "","Transform");
+	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
 
 	Assets::loadTexture(renderer, "Res\\Ship01.png", "Ship01");
 	Assets::loadTexture(renderer, "Res\\Ship02.png", "Ship02");
@@ -55,24 +57,24 @@ void Game::load()
 	Ship* ship = new Ship();
 	ship->setPosition(Vector2{ 100, 300 });
 
-	// Background
-	// Create the "far back" background
-	vector<Texture*> bgTexsFar {
-		&Assets::getTexture("Farback01"),
-		&Assets::getTexture("Farback02")
-	};
-	Actor* bgFar = new Actor();
-	BackgroundSpriteComponent* bgSpritesFar = new BackgroundSpriteComponent(bgFar, bgTexsFar);
-	bgSpritesFar->setScrollSpeed(-100.0f);
+	//// Background
+	//// Create the "far back" background
+	//vector<Texture*> bgTexsFar {
+	//	&Assets::getTexture("Farback01"),
+	//	&Assets::getTexture("Farback02")
+	//};
+	//Actor* bgFar = new Actor();
+	//BackgroundSpriteComponent* bgSpritesFar = new BackgroundSpriteComponent(bgFar, bgTexsFar);
+	//bgSpritesFar->setScrollSpeed(-100.0f);
 
-	// Create the closer background
-	Actor* bgClose = new Actor();
-	std::vector<Texture*> bgTexsClose {
-		&Assets::getTexture("Stars"),
-		&Assets::getTexture("Stars")
-	};
-	BackgroundSpriteComponent* bgSpritesClose = new BackgroundSpriteComponent(bgClose, bgTexsClose, 50);
-	bgSpritesClose->setScrollSpeed(-200.0f);
+	//// Create the closer background
+	//Actor* bgClose = new Actor();
+	//std::vector<Texture*> bgTexsClose {
+	//	&Assets::getTexture("Stars"),
+	//	&Assets::getTexture("Stars")
+	//};
+	//BackgroundSpriteComponent* bgSpritesClose = new BackgroundSpriteComponent(bgClose, bgTexsClose, 50);
+	//bgSpritesClose->setScrollSpeed(-200.0f);
 	
 	const int astroidNumber = 20;
 	for (int i = 0; i < astroidNumber; ++i)

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
-#include "IRenderer.h"
+
+#include "RendererOGL.h"
+#include "RendererSDL.h"
 using std::string;
 
 class Texture
@@ -10,17 +12,19 @@ public:
 	~Texture();
 
 	void unload();
-	bool load(IRenderer& rendererP, const string& filenameP);
+	bool loadSDL(RendererSDL& rendererP, const string& filenameP);
+	bool loadOGL(RendererOGL& rendererP, const string& filenameP);
 	inline SDL_Texture* toSDLTexture() const { return SDLTexture; }
 	void updateInfo(int& widthOut, int& heightOut);
+	void setActive() const;
 
 	inline int getWidth() const { return width; }
 	inline int getHeight() const { return height; }
 
 private:
+	unsigned int textureID;
 	string filename;
-	SDL_Texture* SDLTexture;
 	int width;
 	int height;
+	SDL_Texture* SDLTexture = nullptr;
 };
-

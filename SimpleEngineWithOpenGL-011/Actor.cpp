@@ -54,6 +54,22 @@ Vector2 Actor::getForward() const
 	return Vector2(Maths::cos(rotation), Maths::sin(rotation));
 }
 
+
+void Actor::computeWorldTransform()
+{
+	if (mustRecomputeWorldTransform)
+	{
+		mustRecomputeWorldTransform = false;
+		worldTransform = Matrix4::createScale(scale);
+		worldTransform *= Matrix4::createRotationZ(rotation);
+		worldTransform *= Matrix4::createTranslation(Vector3(position.x, position.y, 0.0f));
+
+		for (auto component : components)
+		{
+			component->onUpdateWorldTransform();
+		}
+	}
+}
 void Actor::processInput(const Uint8* keyState)
 {
 	if (state == Actor::ActorState::Active)
@@ -74,8 +90,10 @@ void Actor::update(float dt)
 {
 	if (state == Actor::ActorState::Active)
 	{
+		computeWorldTransform();
 		updateComponents(dt);
 		updateActor(dt);
+		computeWorldTransform();
 	}
 }
 
@@ -118,18 +136,4 @@ void Actor::removeComponent(Component* component)
 	}
 }
 
-void Actor::computeWorldTransform()
-{
-	if (mustRecomputeWorldTransform)
-	{
-		mustRecomputeWorldTransform = false;
-		worldTransform = Matrix4::createScale(scale);
-		worldTransform *= Matrix4::createRotationZ(scale);
-		worldTransform *= Matrix4::createTranslation(Vector3(position.x, position.y, 0.0f));
 
-		for (auto component : components )
-		{
-			component->onUpdateWorldTransform();
-		}
-	}
-}

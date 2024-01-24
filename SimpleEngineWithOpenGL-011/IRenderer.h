@@ -15,7 +15,7 @@ public:
 
 	enum class Type { SDL, OGL };
 
-	virtual ~IRenderer();
+	virtual ~IRenderer() {};
 
 	virtual bool initialize(Window& window) = 0;
 	virtual void beginDraw() = 0;

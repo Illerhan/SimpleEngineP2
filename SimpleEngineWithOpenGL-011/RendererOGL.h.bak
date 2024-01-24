@@ -24,7 +24,7 @@ public:
 
     void addSprite(class SpriteComponent* sprite);
     void removeSprite(class SpriteComponent* sprite);
-    void drawSprite(const Actor& actor, const Texture& tex, Rectangle srcRect, Vector2 origin, Flip flip) const override;
+    void drawSprite(const Actor&, const Texture& tex, Rectangle srcRect, Vector2 origin, Flip flip) const override;
 
     IRenderer::Type type() { return Type::OGL; }
 

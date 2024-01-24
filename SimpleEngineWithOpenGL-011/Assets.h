@@ -19,7 +19,7 @@ public:
     // Loads (and generates) a shader program from file loading vertex, fragment ( and tessellation control, evolution,
     // geometry) shader's source code. If tcShaderFile, teShaderFile, gShaderFile are nullptr, it also loads
 
-    static Shader loadShader(const std::string& vShaderFile, const std::string fShaderFile,
+    static Shader loadShader(const std::string& vShaderFile, const std::string& fShaderFile,
         const std::string& tcShaderFile, const std::string& teShaderFile,
         const std::string& gShaderFile, const std::string& name);
 
@@ -42,7 +42,7 @@ private:
     static Texture loadTextureFromFile(IRenderer& renderer, const string& filename);
 
     // Loads and generates a shader froem file
-    static Shader loadShaderFromFile(const std::string& vShaderFile, const std::string fShaderFile,
+    static Shader loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile,
         const std::string& tcShaderFile = "", const std::string& teShaderFile = "",
         const std::string& gShaderFile = "");
 };

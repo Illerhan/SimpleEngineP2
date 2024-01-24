@@ -7,7 +7,7 @@
 std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
 
-Shader Assets::loadShader(const std::string& vShaderFile, const std::string& fShaderFile, const std::string& tcShaderFile, const std::string& teShaderFile, const std::string& gShaderFile, const std::string& name)
+Shader Assets::loadShader(const std::string& vShaderFile, const std::string fShaderFile, const std::string& tcShaderFile, const std::string& teShaderFile, const std::string& gShaderFile, const std::string& name)
 {
     shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, tcShaderFile, teShaderFile, gShaderFile);
     return shaders[name];
@@ -69,7 +69,7 @@ Texture Assets::loadTextureFromFile(IRenderer& renderer, const string& filename)
     return texture;
 }
 
-Shader Assets::loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile, const std::string& tcShaderFile, const std::string& teShaderFile, const std::string& gShaderFile)
+Shader Assets::loadShaderFromFile(const std::string& vShaderFile, const std::string fShaderFile, const std::string& tcShaderFile, const std::string& teShaderFile, const std::string& gShaderFile)
 {
     // 1. Retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
