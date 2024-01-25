@@ -68,6 +68,9 @@
     <ClCompile Include="Matrix4.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Maths</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -140,6 +143,9 @@
       <Filter>Maths</Filter>
     </ClInclude>
     <ClInclude Include="Matrix4.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
       <Filter>Maths</Filter>
     </ClInclude>
   </ItemGroup>

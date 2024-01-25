@@ -32,6 +32,7 @@ bool RendererOGL::initialize(Window& windowP)
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+	
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	// Force OpenGL to use hardware acceleration
@@ -54,7 +55,7 @@ bool RendererOGL::initialize(Window& windowP)
 		return false;
 	}
 
-	vertexArray = new VertexArray(vertices, 4, indices, 6);
+	vertexArray = new VertexArray(spriteVertices, 4, indices, 6);
 	
 	return true;
 
