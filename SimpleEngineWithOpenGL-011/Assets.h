@@ -3,6 +3,7 @@
 #include <string>
 #include "Texture.h"
 #include "Shader.h"
+#include "Mesh.h"
 using std::map;
 using std::string;
 
@@ -15,22 +16,29 @@ class Assets
 public:
     static std::map<std::string, Texture> textures;
     static std::map<std::string, Shader> shaders;
-
-    // Loads (and generates) a shader program from file loading vertex, fragment ( and tessellation control, evolution,
-    // geometry) shader's source code. If tcShaderFile, teShaderFile, gShaderFile are nullptr, it also loads
-
-    static Shader loadShader(const std::string& vShaderFile, const std::string& fShaderFile,
-        const std::string& tcShaderFile, const std::string& teShaderFile,
-        const std::string& gShaderFile, const std::string& name);
-
-    // Retrieve a stored shader
-    static Shader& getShader(const std::string& name);
+    static std::map<std::string, Mesh> meshes;
 
     // Loads a texture from file
     static Texture loadTexture(IRenderer& renderer, const string& filename, const string& name);
 
     // Retrieves a stored texture
     static Texture& getTexture(const std::string& name);
+
+    // Loads (and generates) a shader program from file loading vertex, fragment (and tessellation control, evaluation,
+    // geometry) shader's source code. If tcShaderFile, teShaderFile, gShaderFile are not nullptr, it also loads
+    // tessellation and geometry shaders
+    static Shader loadShader(const std::string& vShaderFile, const std::string& fShaderFile,
+        const std::string& tcShaderFile, const std::string& teShaderFile,
+        const std::string& gShaderFile, const std::string& name);
+
+    // Retrieves a stored shader
+    static Shader& getShader(const std::string& name);
+
+    // Loads a mesh from file
+    static Mesh loadMesh(const string& filename, const string& name);
+
+    // Retrieves a stored mesh
+    static Mesh& getMesh(const std::string& name);
 
     // Properly de-allocates all loaded resources
     static void clear();
@@ -41,9 +49,12 @@ private:
     // Loads a single texture from file
     static Texture loadTextureFromFile(IRenderer& renderer, const string& filename);
 
-    // Loads and generates a shader froem file
+    // Loads and generates a shader from file
     static Shader loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile,
         const std::string& tcShaderFile = "", const std::string& teShaderFile = "",
         const std::string& gShaderFile = "");
+
+    static Mesh loadMeshFromFile(const string& filename);
+
 };
 

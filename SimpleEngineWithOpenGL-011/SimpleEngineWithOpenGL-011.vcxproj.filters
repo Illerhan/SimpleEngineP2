@@ -18,9 +18,6 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
-    <ClCompile Include="RendererSDL.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -36,26 +33,16 @@
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Astroid.cpp">
-      <Filter>GameSpecific</Filter>
-    </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Maths</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>GameSpecific</Filter>
-    </ClCompile>
     <ClCompile Include="CircleCollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Laser.cpp">
-      <Filter>GameSpecific</Filter>
-    </ClCompile>
     <ClCompile Include="Assets.cpp" />
-    <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="RendererOGL.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -70,6 +57,14 @@
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
       <Filter>Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="Camera.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +87,6 @@
     <ClInclude Include="Vector2.h">
       <Filter>Maths</Filter>
     </ClInclude>
-    <ClInclude Include="RendererSDL.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -107,23 +99,14 @@
     <ClInclude Include="MoveComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Astroid.h">
-      <Filter>GameSpecific</Filter>
-    </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Maths</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>GameSpecific</Filter>
-    </ClInclude>
     <ClInclude Include="CircleCollisionComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Laser.h">
-      <Filter>GameSpecific</Filter>
     </ClInclude>
     <ClInclude Include="Maths.h">
       <Filter>Maths</Filter>
@@ -132,7 +115,6 @@
     <ClInclude Include="IRenderer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="VertexArray.h" />
     <ClInclude Include="RendererOGL.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -147,6 +129,14 @@
     </ClInclude>
     <ClInclude Include="Quaternion.h">
       <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +170,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Res\Shaders\Sprite.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Res\Shaders\BasicMesh.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Res\Shaders\BasicMesh.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

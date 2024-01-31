@@ -7,6 +7,7 @@
 #include "Vector2.h"
 #include "Astroid.h"
 #include "RendererOGL.h"
+#include "Camera.h"
 using std::vector;
 
 class Game
@@ -24,7 +25,8 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : isRunning(true), isUpdatingActors(false) {}
+	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
+	Camera* camera;
 
 public:
 	bool initialize();
@@ -39,9 +41,9 @@ public:
 	RendererOGL& getRenderer() { return renderer; }
 
 	// Game specific
-	vector<Astroid*>& getAstroids();
-	void addAstroid(Astroid* astroid);
-	void removeAstroid(Astroid* astroid);
+	//vector<Astroid*>& getAstroids();
+	//void addAstroid(Astroid* astroid);
+	//void removeAstroid(Astroid* astroid);
 
 private:
 	void processInput();
@@ -57,6 +59,6 @@ private:
 	vector<Actor*> pendingActors;
 
 	// Game specific
-	vector<Astroid*> astroids;
+	//vector<Astroid*> astroids;
 };
 
