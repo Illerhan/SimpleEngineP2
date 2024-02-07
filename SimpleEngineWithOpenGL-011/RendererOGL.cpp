@@ -15,7 +15,9 @@ RendererOGL::RendererOGL() :
 	spriteVertexArray(nullptr),
 	spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)),
 	view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 25.0f, 10000.0f))
+	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 25.0f, 10000.0f)),
+	ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
+	dirLight({ Vector3::zero, Vector3::zero, Vector3::zero })
 {
 }
 
@@ -77,7 +79,7 @@ void RendererOGL::beginDraw()
 void RendererOGL::draw()
 {
 	drawMeshes();
-	//drawSprites();
+	drawSprites();
 }
 
 void RendererOGL::endDraw()
@@ -96,12 +98,16 @@ void RendererOGL::drawMeshes()
 	// Enable depth buffering/disable alpha blend
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
-	Assets::getShader("BasicMesh").use();
+	Shader& shader = Assets::getShader("Phong");
+	shader.use();
 	// Update view-projection matrix
-	Assets::getShader("BasicMesh").setMatrix4("uViewProj", view * projection);
+	shader.setMatrix4("uViewProj", view * projection);
+	// Lights
+	setLightUniforms(shader);
+	// Draw
 	for (auto mc : meshes)
 	{
-		mc->draw(Assets::getShader("BasicMesh"));
+		mc->draw(Assets::getShader("Phong"));
 	}
 }
 
@@ -169,4 +175,24 @@ void RendererOGL::removeMesh(MeshComponent* mesh)
 void RendererOGL::setViewMatrix(const Matrix4& viewP)
 {
 	view = viewP;
+}
+
+void RendererOGL::setLightUniforms(Shader& shader)
+{
+
+	// camera position is from inverted view
+	Matrix4 invertedView = view;
+	invertedView.invert();
+	shader.setVector3f("uCameraPos", invertedView.getTranslation());
+	// Ambient
+	shader.setVector3f("uAmbientLight", ambientLight);
+	// Directional light
+	shader.setVector3f("uDirLight.direction", dirLight.direction);
+	shader.setVector3f("uDirLight.diffuseColor", dirLight.diffuseColor);
+	shader.setVector3f("uDirLight.specColor", dirLight.specColor);
+}
+
+void RendererOGL::setAmbiantLight(const Vector3& ambientP)
+{
+	ambientLight = ambientP;
 }

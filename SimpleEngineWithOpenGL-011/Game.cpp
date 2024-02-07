@@ -4,6 +4,10 @@
 #include "Assets.h"
 #include "MeshComponent.h"
 
+#include "Sphere.h"
+#include "Cube.h"
+#include "Plane.h"
+
 bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
@@ -15,6 +19,9 @@ void Game::load()
 {
 	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
 	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
+	Assets::loadShader("Res\\Shaders\\Phong.vert", "Res\\Shaders\\Phong.frag", "", "", "", "Phong");
+
+
 
 	Assets::loadTexture(renderer, "Res\\Textures\\Default.png", "Default");
 	Assets::loadTexture(renderer, "Res\\Textures\\Cube.png", "Cube");
@@ -29,20 +36,17 @@ void Game::load()
 
 	camera = new Camera();
 
-	Actor* a = new Actor();
+	Cube* a = new Cube();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
 	a->setScale(100.0f);
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
-	MeshComponent* mc = new MeshComponent(a);
-	mc->setMesh(Assets::getMesh("Mesh_Cube"));
 
-	Actor* b = new Actor();
+	Sphere* b = new Sphere();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
-	MeshComponent* mcb = new MeshComponent(b);
-	mcb->setMesh(Assets::getMesh("Mesh_Sphere"));
+
 
 }
 
