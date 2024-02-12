@@ -1,6 +1,8 @@
 #include "InputComponent.h"
 #include <SDL_scancode.h>
 
+#include "InputSystem.h"
+
 InputComponent::InputComponent(Actor* ownerP) :
 	MoveComponent(ownerP),
 	maxForwardSpeed(100.0f),
@@ -12,25 +14,25 @@ InputComponent::InputComponent(Actor* ownerP) :
 {
 }
 
-void InputComponent::processInput(const Uint8* keyState)
+void InputComponent::processInput(const InputState& inputState)
 {
 	float forwardSpeed = 0.0f;
-	if (keyState[forwardKey])
+	if (inputState.keyboard.getkeyState(forwardKey) == ButtonState::Held)
 	{
 		forwardSpeed += maxForwardSpeed;
 	}
-	if (keyState[backKey])
+	if (inputState.keyboard.getkeyState(backKey) == ButtonState::Held)
 	{
 		forwardSpeed -= maxForwardSpeed;
 	}
 	setForwardSpeed(forwardSpeed);
 
 	float angularSpeed = 0.0f;
-	if (keyState[clockwiseKey])
+	if (inputState.keyboard.getkeyState(clockwiseKey) == ButtonState::Held)
 	{
 		angularSpeed -= maxAngularSpeed;
 	}
-	if (keyState[counterClockwiseKey])
+	if (inputState.keyboard.getkeyState(counterClockwiseKey) == ButtonState::Held)
 	{
 		angularSpeed += maxAngularSpeed;
 	}
@@ -47,22 +49,22 @@ void InputComponent::setMaxAngularSpeed(float maxAngularSpeedP)
 	maxAngularSpeed = maxAngularSpeedP;
 }
 
-void InputComponent::setForwardKey(int key)
+void InputComponent::setForwardKey(SDL_Scancode key)
 {
 	forwardKey = key;
 }
 
-void InputComponent::setBackKey(int key)
+void InputComponent::setBackKey(SDL_Scancode key)
 {
 	backKey = key;
 }
 
-void InputComponent::setClockwiseKey(int key)
+void InputComponent::setClockwiseKey(SDL_Scancode key)
 {
 	clockwiseKey = key;
 }
 
-void InputComponent::setCounterClockwiseKey(int key)
+void InputComponent::setCounterClockwiseKey(SDL_Scancode key)
 {
 	counterClockwiseKey = key;
 }

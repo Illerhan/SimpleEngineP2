@@ -75,6 +75,10 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="KeyboardState.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="MouseState.cpp" />
+    <ClCompile Include="ControllerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -159,6 +163,10 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="KeyboardState.h" />
+    <ClInclude Include="MouseState.h" />
+    <ClInclude Include="ControllerState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
