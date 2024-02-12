@@ -1,9 +1,9 @@
 {
 	"version":1,
 	"vertexformat":"PosNormTex",
-	"shader":"BasicMesh",
+	"shader":"Phong",
 	"textures":[
-		"Assets/Plane.png"
+		"Plane"
 	],
 	"specularPower":100.0,
 	"vertices":[

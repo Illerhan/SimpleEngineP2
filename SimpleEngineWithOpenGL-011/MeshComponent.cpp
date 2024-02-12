@@ -15,13 +15,13 @@ MeshComponent::~MeshComponent()
 
 void MeshComponent::draw(Shader& shader)
 {
-	if(mesh)
+	if (mesh)
 	{
 		Matrix4 wt = owner.getWorldTransform();
 		shader.setMatrix4("uWorldTransform", wt);
-		shader.setFloat("uSpecPower",mesh->getSpecularPower());
+		shader.setFloat("uSpecPower", mesh->getSpecularPower());
 		Texture* t = mesh->getTexture(textureIndex);
-		if(t)
+		if (t)
 		{
 			t->setActive();
 		}
@@ -40,5 +40,3 @@ void MeshComponent::setTextureIndex(size_t textureIndexP)
 {
 	textureIndex = textureIndexP;
 }
-
-

@@ -3,11 +3,10 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include "Window.h"
-#include "RendererSDL.h"
 #include "Vector2.h"
-#include "Astroid.h"
 #include "RendererOGL.h"
 #include "Camera.h"
+
 using std::vector;
 
 class Game
@@ -26,7 +25,6 @@ public:
 
 private:
 	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
-	Camera* camera;
 
 public:
 	bool initialize();
@@ -37,13 +35,7 @@ public:
 
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
-
 	RendererOGL& getRenderer() { return renderer; }
-
-	// Game specific
-	//vector<Astroid*>& getAstroids();
-	//void addAstroid(Astroid* astroid);
-	//void removeAstroid(Astroid* astroid);
 
 private:
 	void processInput();
@@ -53,12 +45,10 @@ private:
 	bool isRunning;
 	Window window;
 	RendererOGL renderer;
-			 
+
 	bool isUpdatingActors;
 	vector<Actor*> actors;
 	vector<Actor*> pendingActors;
-
-	// Game specific
-	//vector<Astroid*> astroids;
+	Camera* camera;
 };
 

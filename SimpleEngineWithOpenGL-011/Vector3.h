@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-
 #include "Maths.h"
 class Vector3
 {
@@ -10,7 +8,7 @@ public:
 	float y;
 	float z;
 
-	Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
+	Vector3(): x(0.0f), y(0.0f), z(0.0f) {}
 
 	explicit Vector3(float xP, float yP, float zP)
 		:x(xP), y(yP), z(zP) {}
@@ -136,3 +134,4 @@ public:
 	static const Vector3 infinity;
 	static const Vector3 negInfinity;
 };
+

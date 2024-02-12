@@ -1,7 +1,6 @@
 #pragma once
 #include "Vector3.h"
-
-struct DirectioanlLight
+struct DirectionalLight
 {
 	Vector3 direction;
 	Vector3 diffuseColor;

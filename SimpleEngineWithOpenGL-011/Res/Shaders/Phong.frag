@@ -2,7 +2,7 @@
 #version 330
 
 // Inputs from vertex shader
-// Tex Coord
+// Tex coord
 in vec2 fragTexCoord;
 // Normal (in world space)
 in vec3 fragNormal;

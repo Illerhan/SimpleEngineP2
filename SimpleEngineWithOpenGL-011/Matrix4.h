@@ -323,5 +323,6 @@ public:
 		};
 		return Matrix4(temp);
 	}
+
 	static const Matrix4 identity;
 };

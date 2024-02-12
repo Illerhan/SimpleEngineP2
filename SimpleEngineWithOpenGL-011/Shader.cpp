@@ -164,7 +164,8 @@ void Shader::setVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GL
 void Shader::setVector4f(const GLchar* name, const Vector4& value)
 {
     glUniform4f(glGetUniformLocation(id, name), value.x, value.y, value.z, value.w);
-}*/
+}
+*/
 void Shader::setMatrix4(const GLchar* name, const Matrix4& matrix)
 {
     glUniformMatrix4fv(glGetUniformLocation(id, name), 1, GL_TRUE, matrix.getAsFloatPtr());

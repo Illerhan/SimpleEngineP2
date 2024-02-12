@@ -20,7 +20,7 @@ public:
 	GLuint id;
 
 	// Constructor
-	Shader() : id(0), vs(0), fs(0), gs(0), tcs(0), tes(0) { }
+	Shader(): id(0), vs(0), fs(0), gs(0), tcs(0), tes(0) { }
 
 	// Unload the shader
 	void unload();
@@ -42,14 +42,13 @@ public:
 	void setInteger(const GLchar* name, GLint value);
 	void setVector2f(const GLchar* name, GLfloat x, GLfloat y);
 	void setVector2f(const GLchar* name, const Vector2& value);
-
-	
 	void setVector3f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z);
 	void setVector3f(const GLchar* name, const Vector3& value);
-	/*void setVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-	void setVector4f(const GLchar* name, const Vector4& value);*/
+	/*
+	void setVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+	void setVector4f(const GLchar* name, const Vector4& value);
+	*/
 	void setMatrix4(const GLchar* name, const Matrix4& matrix);
-	
 
 private:
 	GLuint vs;

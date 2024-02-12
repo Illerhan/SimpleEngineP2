@@ -9,7 +9,7 @@
 #include <glew.h>
 #include <SDL_image.h>
 
-RendererOGL::RendererOGL() :
+RendererOGL::RendererOGL():
 	window(nullptr),
 	context(nullptr),
 	spriteVertexArray(nullptr),
@@ -46,7 +46,7 @@ bool RendererOGL::initialize(Window& windowP)
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
 	// OpenGL Context
-	context = SDL_GL_CreateContext(window->getSDLWindow());
+	context = SDL_GL_CreateContext(windowP.getSDLWindow());
 
 	// GLEW
 	glewExperimental = GL_TRUE;
@@ -66,7 +66,7 @@ bool RendererOGL::initialize(Window& windowP)
 	}
 
 	spriteVertexArray = new VertexArray(spriteVertices, 4, indices, 6);
-	return true;
+    return true;
 }
 
 void RendererOGL::beginDraw()
@@ -134,7 +134,7 @@ void RendererOGL::drawSprites()
 	glDisable(GL_DEPTH_TEST);
 	// Enable alpha blending on the color buffer
 	glEnable(GL_BLEND);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 
@@ -154,9 +154,7 @@ void RendererOGL::drawSprite(const Actor& actor, const Texture& tex, Rectangle s
 {
 	Matrix4 scaleMat = Matrix4::createScale((float)tex.getWidth(), (float)tex.getHeight(), 1.0f);
 	Matrix4 world = scaleMat * actor.getWorldTransform();
-	Matrix4 pixelTranslation = Matrix4::createTranslation(Vector3(-WINDOW_WIDTH / 2 - origin.x, -WINDOW_HEIGHT / 2 - origin.y, 0.0f)); // Screen pixel coordinates
-	Shader& spriteShader = Assets::getShader("Sprite");
-	spriteShader.setMatrix4("uWorldTransform", world * pixelTranslation);
+	Assets::getShader("Sprite").setMatrix4("uWorldTransform", world);
 	tex.setActive();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
@@ -179,8 +177,7 @@ void RendererOGL::setViewMatrix(const Matrix4& viewP)
 
 void RendererOGL::setLightUniforms(Shader& shader)
 {
-
-	// camera position is from inverted view
+	// Camera position is from inverted view
 	Matrix4 invertedView = view;
 	invertedView.invert();
 	shader.setVector3f("uCameraPos", invertedView.getTranslation());
@@ -190,9 +187,10 @@ void RendererOGL::setLightUniforms(Shader& shader)
 	shader.setVector3f("uDirLight.direction", dirLight.direction);
 	shader.setVector3f("uDirLight.diffuseColor", dirLight.diffuseColor);
 	shader.setVector3f("uDirLight.specColor", dirLight.specColor);
+
 }
 
-void RendererOGL::setAmbiantLight(const Vector3& ambientP)
+void RendererOGL::setAmbientLight(const Vector3& ambientP)
 {
 	ambientLight = ambientP;
 }

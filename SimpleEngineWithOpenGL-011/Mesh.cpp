@@ -1,14 +1,12 @@
 #include "Mesh.h"
 #include "VertexArray.h"
 
-Mesh::Mesh() : vertexArray(nullptr), shaderName(""),radius(0.0f), specularPower(100.0f)
+Mesh::Mesh() : vertexArray(nullptr), shaderName(""), radius(0.0f), specularPower(100.0f)
 {
-	
 }
 
 Mesh::~Mesh()
 {
-
 }
 
 void Mesh::unload()
@@ -25,9 +23,13 @@ void Mesh::addTexture(Texture* texture)
 Texture* Mesh::getTexture(int index)
 {
 	if (index < textures.size())
+	{
 		return textures[index];
+	}
 	else
+	{
 		return nullptr;
+	}
 }
 
 void Mesh::setVertexArray(VertexArray* vertexArrayP)
@@ -49,6 +51,3 @@ void Mesh::setSpecularPower(float specularPowerP)
 {
 	specularPower = specularPowerP;
 }
-
-
-
