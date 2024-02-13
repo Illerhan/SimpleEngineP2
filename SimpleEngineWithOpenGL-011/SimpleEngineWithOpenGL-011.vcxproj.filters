@@ -115,6 +115,7 @@
       <Filter>Inputs</Filter>
     </ClCompile>
     <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="Collisions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -237,6 +238,7 @@
       <Filter>Inputs</Filter>
     </ClInclude>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="Collisions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

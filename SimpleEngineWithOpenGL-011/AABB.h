@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector3.h"
 
-class AABB
+struct AABB
 {
 	AABB(const Vector3& minP, const Vector3& maxP);
 

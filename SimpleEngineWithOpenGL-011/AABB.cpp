@@ -58,3 +58,14 @@ float AABB::minDistSq(const Vector3& point) const
 
 	return dx * dx + dy * dy + dz * dz;
 }
+
+bool AABB::contains(const Vector3& point) const
+{
+	bool outside = point.x<min.x ||
+		point.y < min.y ||
+		point.z < min.z ||
+		point.x > max.x ||
+		point.y > max.y ||
+		point.z > max.z;
+	return !outside;
+}
