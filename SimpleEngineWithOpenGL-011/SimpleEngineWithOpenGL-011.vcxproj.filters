@@ -66,28 +66,55 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Cube.cpp">
+    <ClCompile Include="CubeActor.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereActor.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaneActor.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSActor.cpp" />
+    <ClCompile Include="FollowActor.cpp" />
+    <ClCompile Include="OrbitActor.cpp" />
+    <ClCompile Include="Spline.cpp" />
+    <ClCompile Include="SplineActor.cpp" />
+    <ClCompile Include="SplineCameraComponent.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitCameraComponent.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCameraComponent.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowCameraComponent.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="LineSegment.cpp" />
+    <ClCompile Include="Plane.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Geometry</Filter>
+    <ClCompile Include="ControllerState.cpp">
+      <Filter>Inputs</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardState.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="MouseState.cpp" />
-    <ClCompile Include="ControllerState.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="FPSCameraComponent.cpp" />
-    <ClCompile Include="FPSActor.cpp" />
-    <ClCompile Include="FollowCameraComponent.cpp" />
-    <ClCompile Include="FollowActor.cpp" />
-    <ClCompile Include="OrbitCameraComponent.cpp" />
-    <ClCompile Include="OrbitActor.cpp" />
-    <ClCompile Include="Spline.cpp" />
-    <ClCompile Include="SplineCameraComponent.cpp" />
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardState.cpp">
+      <Filter>Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseState.cpp">
+      <Filter>Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -160,31 +187,56 @@
     <ClInclude Include="Camera.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h">
+    <ClInclude Include="CubeActor.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="SphereActor.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
+    <ClInclude Include="PlaneActor.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="DirectionalLight.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="KeyboardState.h" />
-    <ClInclude Include="MouseState.h" />
-    <ClInclude Include="ControllerState.h" />
-    <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="FPSCameraComponent.h" />
     <ClInclude Include="FPSActor.h" />
-    <ClInclude Include="FollowCameraComponent.h" />
     <ClInclude Include="FollowActor.h" />
-    <ClInclude Include="OrbitCameraComponent.h" />
     <ClInclude Include="OrbitActor.h" />
     <ClInclude Include="Spline.h" />
     <ClInclude Include="SplineCameraComponent.h" />
+    <ClInclude Include="SplineActor.h" />
+    <ClInclude Include="OrbitCameraComponent.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCameraComponent.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowCameraComponent.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="LineSegment.h" />
+    <ClInclude Include="Plane.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerState.h">
+      <Filter>Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardState.h">
+      <Filter>Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseState.h">
+      <Filter>Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -204,6 +256,12 @@
     </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{13a3e2ab-c9f8-46c4-842c-0d4e341e4047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cameras">
+      <UniqueIdentifier>{a019aae2-7a4c-4c76-a04a-906c6c5e36b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inputs">
+      <UniqueIdentifier>{38385848-a4b1-41d8-b233-f0864b808509}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

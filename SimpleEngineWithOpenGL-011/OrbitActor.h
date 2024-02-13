@@ -1,15 +1,15 @@
 #pragma once
 #include "Actor.h"
-class OrbitActor :
-    public Actor
+
+class OrbitActor : public Actor
 {
 public:
-    OrbitActor();
-    void actorInput(const InputState& inputState) override;
-    void setVisible(bool isVisible);
+	OrbitActor();
+	void actorInput(const InputState& inputState) override;
+	void setVisible(bool visible);
 
 private:
-    class OrbitCameraComponent* cameraComponent;
-    class MeshComponent* meshComponent;
+	class OrbitCameraComponent* cameraComponent;
+	class MeshComponent* meshComponent;
 };
 

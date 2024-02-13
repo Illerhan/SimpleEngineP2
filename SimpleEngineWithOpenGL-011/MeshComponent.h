@@ -16,6 +16,6 @@ public:
 protected:
 	Mesh* mesh;
 	size_t textureIndex;
-	bool isVisible;
+	bool isVisible{true};
 };
 

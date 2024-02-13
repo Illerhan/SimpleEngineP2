@@ -1,9 +1,6 @@
 #include "Sphere.h"
-#include "MeshComponent.h"
-#include "Assets.h"
 
-Sphere::Sphere() : Actor()
+Sphere::Sphere(const Vector3& centerP, float radiusP) : center(centerP), radius(radiusP)
 {
-	MeshComponent* mc = new MeshComponent(this);
-	mc->setMesh(Assets::getMesh("Mesh_Sphere"));
+	
 }

@@ -7,33 +7,35 @@ SplineCameraComponent::SplineCameraComponent(Actor* ownerP) :
 	speed(0.5f),
 	isPaused(true)
 {
-	
 }
 
 void SplineCameraComponent::update(float dt)
 {
 	CameraComponent::update(dt);
 
-	if(!isPaused)
+	if (!isPaused)
 	{
 		t += speed * dt;
-
-
-
-		if (t>= 1.0f)
+		// Advance to the next control point if needed.
+		// This assumes speed isn't so fast that you jump past
+		// multiple control points in one frame.
+		if (t >= 1.0f)
 		{
-			if (index < spline.getNbPoints()-3)
+			// Make sure we have enough points to advance the path
+			if (index < spline.getNbPoints() - 3)
 			{
 				index++;
 				t = t - 1.0f;
 			}
-		}else
-		{
-			// Path's done, so pause
-			isPaused = true;
+			else
+			{
+				// Path's done, so pause
+				isPaused = true;
+			}
 		}
 	}
-	Vector3	cameraPosition = spline.compute(index, t);
+
+	Vector3 cameraPosition = spline.compute(index, t);
 	Vector3 target = spline.compute(index, t + 0.01f);
 	Matrix4 view = Matrix4::createLookAt(cameraPosition, target, Vector3::unitZ);
 	setViewMatrix(view);
@@ -60,4 +62,3 @@ void SplineCameraComponent::restart()
 	t = 0.0f;
 	isPaused = false;
 }
-

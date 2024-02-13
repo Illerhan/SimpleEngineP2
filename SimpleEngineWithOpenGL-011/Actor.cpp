@@ -38,7 +38,7 @@ void Actor::setScale(float scaleP)
 	mustRecomputeWorldTransform = true;
 }
 
-void Actor::setRotation(Quaternion rotationP)""
+void Actor::setRotation(Quaternion rotationP)
 {
 	rotation = rotationP;
 	mustRecomputeWorldTransform = true;
