@@ -5,14 +5,13 @@
 #include "Window.h"
 #include "Vector2.h"
 #include "RendererOGL.h"
-#include "Camera.h"
+//#include "AudioSystem.h"
 #include "InputSystem.h"
 
 using std::vector;
 
 class Game
 {
-	
 public:
 	static Game& instance()
 	{
@@ -26,7 +25,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
+	Game() : isRunning(true), isUpdatingActors(false), fps(nullptr), crosshair(nullptr), follow(nullptr), orbit(nullptr) {}
 
 public:
 	bool initialize();
@@ -38,6 +37,8 @@ public:
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 	RendererOGL& getRenderer() { return renderer; }
+	//AudioSystem& getAudioSystem() { return audioSystem; }
+
 
 private:
 	void processInput();
@@ -47,11 +48,19 @@ private:
 	bool isRunning;
 	Window window;
 	RendererOGL renderer;
-	InputSystem inputSysteme;
+	//AudioSystem audioSystem;
+	InputSystem inputSystem;
 
 	bool isUpdatingActors;
 	vector<Actor*> actors;
 	vector<Actor*> pendingActors;
-	Camera* camera;
-};
 
+	// Game specific
+	void changeCamera(int mode);
+
+	//SoundEvent musicEvent;
+	class FPSActor* fps;
+	class SpriteComponent* crosshair;
+	class FollowActor* follow;
+	class OrbitActor* orbit;
+};

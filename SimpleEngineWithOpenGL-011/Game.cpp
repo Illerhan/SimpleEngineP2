@@ -6,20 +6,28 @@
 #include "Cube.h"
 #include "Sphere.h"
 #include "Plane.h"
+//#include "AudioComponent.h"
+#include "FPSActor.h"
+#include "FollowActor.h"
+#include "OrbitActor.h"
 
 bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
-	bool isInputInit = inputSysteme.initialize();
-	return isWindowInit && isRendererInit && isInputInit; // Return bool && bool && bool ...to detect error
+	//bool isAudioInit = audioSystem.initialize();
+	bool isInputInit = inputSystem.initialize();
+
+	return isWindowInit && isRendererInit /*&& isAudioInit*/ && isInputInit; // Return bool && bool && bool ...to detect error
 }
 
 void Game::load()
 {
+	inputSystem.setMouseRelativeMode(true);
+
 	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
-	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
 	Assets::loadShader("Res\\Shaders\\Phong.vert", "Res\\Shaders\\Phong.frag", "", "", "", "Phong");
+	Assets::loadShader("Res\\Shaders\\BasicMesh.vert", "Res\\Shaders\\BasicMesh.frag", "", "", "", "BasicMesh");
 
 	Assets::loadTexture(renderer, "Res\\Textures\\Default.png", "Default");
 	Assets::loadTexture(renderer, "Res\\Textures\\Cube.png", "Cube");
@@ -27,12 +35,18 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Textures\\Plane.png", "Plane");
 	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Sphere.png", "Sphere");
-	
+	Assets::loadTexture(renderer, "Res\\Textures\\Crosshair.png", "Crosshair");
+	Assets::loadTexture(renderer, "Res\\Textures\\RacingCar.png", "RacingCar");
+	Assets::loadTexture(renderer, "Res\\Textures\\Rifle.png", "Rifle");
+
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
-	
-	camera = new Camera();
+	Assets::loadMesh("Res\\Meshes\\Rifle.gpmesh", "Mesh_Rifle");
+	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
+
+	fps = new FPSActor();
+	follow = new FollowActor();
 
 	Cube* a = new Cube();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
@@ -40,7 +54,7 @@ void Game::load()
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
-	
+
 	Sphere* b = new Sphere();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
@@ -92,61 +106,81 @@ void Game::load()
 	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 
-	// UI elements
-	Actor* ui = new Actor();
-	ui->setPosition(Vector3(-350.0f, -350.0f, 0.0f));
-	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("HealthBar"));
+	// Create spheres with audio components playing different sounds
+	Sphere* soundSphere = new Sphere();
+	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
+	soundSphere->setScale(1.0f);
+	//AudioComponent* ac = new AudioComponent(soundSphere);
+	//ac->playEvent("event:/FireLoop");
 
-	ui = new Actor();
-	ui->setPosition(Vector3(375.0f, -275.0f, 0.0f));
-	ui->setScale(0.75f);
-	sc = new SpriteComponent(ui, Assets::getTexture("Radar"));
+	// Corsshair
+	Actor* crosshairActor = new Actor();
+	crosshairActor->setScale(2.0f);
+	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
+
+	// Start music
+	//musicEvent = audioSystem.playEvent("event:/Music");
+
+	changeCamera(1);
 }
 
 void Game::processInput()
 {
+	inputSystem.preUpdate();
 
-	inputSysteme.preUpdate();
 	// SDL Event
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			isRunning = false;
-			break;
-		}
+		isRunning = inputSystem.processEvent(event);
 	}
-	// Keyboard state
-	inputSysteme.update();
-	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+
+	inputSystem.update();
+	const InputState& input = inputSystem.getInputState();
+
 	// Escape: quit game
-	if (keyboardState[SDL_SCANCODE_ESCAPE])
+	if (input.keyboard.getkeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
 	{
 		isRunning = false;
 	}
+
+	if (input.keyboard.getkeyState(SDL_SCANCODE_1) == ButtonState::Pressed)
+	{
+		changeCamera(1);
+	}
+	else if (input.keyboard.getkeyState(SDL_SCANCODE_2) == ButtonState::Pressed)
+	{
+		changeCamera(2);
+	}
+	else if (input.keyboard.getkeyState(SDL_SCANCODE_3) == ButtonState::Pressed)
+	{
+		changeCamera(3);
+	}
+
 	// Actor input
 	isUpdatingActors = true;
 	for (auto actor : actors)
 	{
-		actor->processInput(keyboardState);
+		actor->processInput(input);
 	}
 	isUpdatingActors = false;
 }
 
 void Game::update(float dt)
 {
+	// Update audio
+	//audioSystem.update(dt);
+
 	// Update actors 
 	isUpdatingActors = true;
-	for(auto actor: actors) 
+	for (auto actor : actors)
 	{
 		actor->update(dt);
 	}
 	isUpdatingActors = false;
 
 	// Move pending actors to actors
-	for (auto pendingActor: pendingActors)
+	for (auto pendingActor : pendingActors)
 	{
 		pendingActor->computeWorldTransform();
 		actors.emplace_back(pendingActor);
@@ -173,6 +207,36 @@ void Game::render()
 	renderer.beginDraw();
 	renderer.draw();
 	renderer.endDraw();
+}
+
+void Game::changeCamera(int mode)
+{
+	// Disable everything
+	fps->setState(Actor::ActorState::Paused);
+	fps->setVisible(false);
+	crosshair->setVisible(false);
+	follow->setState(Actor::ActorState::Paused);
+	follow->setVisible(false);
+
+	// Enable the camera specified by the mode
+	switch (mode)
+	{
+	case 1:
+	default:
+		fps->setState(Actor::ActorState::Active);
+		fps->setVisible(true);
+		crosshair->setVisible(true);
+		break;
+	case 2:
+		follow->setState(Actor::ActorState::Active);
+		follow->setVisible(true);
+		break;
+	case 3 :
+		orbit->setState(Actor::ActorState::Active);
+		orbit->setVisible(true);
+		break;
+	}
+	
 }
 
 void Game::loop()
@@ -204,8 +268,9 @@ void Game::unload()
 
 void Game::close()
 {
-	inputSysteme.close();
+	inputSystem.close();
 	renderer.close();
+	//audioSystem.close();
 	window.close();
 	SDL_Quit();
 }

@@ -3,6 +3,8 @@
 #include "MouseState.h"
 #include <SDL_events.h>
 
+#include "ControllerState.h"
+
 enum class ButtonState
 {
 	None,
@@ -15,6 +17,7 @@ struct InputState
 {
 	KeyboardState keyboard;
 	MouseState mouse;
+	ControllerState	controller;
 };
 
 class InputSystem
@@ -38,5 +41,13 @@ public:
 private:
 	InputState inputState;
 	bool isCursorDisplayed;
+	float filter1D(int input);
+	Vector2 filter2D(int inputX, int inputY);
+
+	SDL_GameController* controller;
 
 };
+
+constexpr int CONTROLLER_DEAD_ZONE_1D = 250;
+constexpr float CONTROLLER_DEAD_ZONE = 8000.f;
+constexpr int CONTROLLER_MAX_VALUE = 30000;

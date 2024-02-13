@@ -38,7 +38,7 @@ void Actor::setScale(float scaleP)
 	mustRecomputeWorldTransform = true;
 }
 
-void Actor::setRotation(Quaternion rotationP)
+void Actor::setRotation(Quaternion rotationP)""
 {
 	rotation = rotationP;
 	mustRecomputeWorldTransform = true;
@@ -52,6 +52,11 @@ void Actor::setState(ActorState stateP)
 Vector3 Actor::getForward() const
 {
 	return Vector3::transform(Vector3::unitX, rotation);
+}
+
+Vector3 Actor::getRight() const
+{
+	return Vector3::transform(Vector3::unitY, rotation);
 }
 
 void Actor::computeWorldTransform()

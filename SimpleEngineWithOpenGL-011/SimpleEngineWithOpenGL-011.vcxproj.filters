@@ -79,6 +79,15 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="MouseState.cpp" />
     <ClCompile Include="ControllerState.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="FPSCameraComponent.cpp" />
+    <ClCompile Include="FPSActor.cpp" />
+    <ClCompile Include="FollowCameraComponent.cpp" />
+    <ClCompile Include="FollowActor.cpp" />
+    <ClCompile Include="OrbitCameraComponent.cpp" />
+    <ClCompile Include="OrbitActor.cpp" />
+    <ClCompile Include="Spline.cpp" />
+    <ClCompile Include="SplineCameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -167,6 +176,15 @@
     <ClInclude Include="KeyboardState.h" />
     <ClInclude Include="MouseState.h" />
     <ClInclude Include="ControllerState.h" />
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="FPSCameraComponent.h" />
+    <ClInclude Include="FPSActor.h" />
+    <ClInclude Include="FollowCameraComponent.h" />
+    <ClInclude Include="FollowActor.h" />
+    <ClInclude Include="OrbitCameraComponent.h" />
+    <ClInclude Include="OrbitActor.h" />
+    <ClInclude Include="Spline.h" />
+    <ClInclude Include="SplineCameraComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
