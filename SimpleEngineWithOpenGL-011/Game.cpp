@@ -15,6 +15,9 @@
 #include <algorithm>
 #include <algorithm>
 
+#include "FollowCameraComponent.h"
+#include "Random.h"
+
 bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
@@ -51,27 +54,36 @@ void Game::load()
 	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
 
-	fps = new FPSActor();
+	tps = new FollowActor();
+	tps->setPosition(Vector3(0.f, 0.f, 200.f));
+	tps->setScale(0.5f);
+	tps->setSpeed(300.f);
+	fc = new FollowCameraComponent(tps);
+	fc->setSpringConstant(1000.f);
+	
+	for (int i = 0; i <10 ;i++)
+	{
+		CubeActor* a = new CubeActor();
+		a->setPosition(Vector3(Random::getFloatRange(0,2000), Random::getFloatRange(0, 2000), 0.f));
+		a->setScale(50.f);
+		Quaternion q(Vector3::unitY, -Maths::piOver2);
+		q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+		a->setRotation(q);
+	}
+	
 
-	CubeActor* a = new CubeActor();
-	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
-	a->setScale(100.0f);
-	Quaternion q(Vector3::unitY, -Maths::piOver2);
-	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
-	a->setRotation(q);
-
-	SphereActor* b = new SphereActor();
-	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	b->setScale(3.0f);
+	//SphereActor* b = new SphereActor();
+	//b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
+	//b->setScale(3.0f);
 
 	// Floor and walls
 
 	// Setup floor
 	const float start = -1250.0f;
-	const float size = 250.0f;
-	for (int i = 0; i < 10; i++)
+	const float size = 1000.f;
+	for (int i = 0; i < 25; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 25; j++)
 		{
 			PlaneActor* p = new PlaneActor();
 			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
@@ -79,7 +91,7 @@ void Game::load()
 	}
 
 	// Left/right walls
-	q = Quaternion(Vector3::unitX, Maths::piOver2);
+	Quaternion q = Quaternion(Vector3::unitX, Maths::piOver2);
 	for (int i = 0; i < 10; i++)
 	{
 		PlaneActor* p = new PlaneActor();
@@ -89,11 +101,12 @@ void Game::load()
 		p = new PlaneActor();
 		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
 		p->setRotation(q);
+		
 	}
 
-	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
+	//q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
 	// Forward/back walls
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		PlaneActor* p = new PlaneActor();
 		p->setPosition(Vector3(start - size, start + i * size, 0.0f));
@@ -102,7 +115,7 @@ void Game::load()
 		p = new PlaneActor();
 		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
 		p->setRotation(q);
-	}
+	}*/
 
 	// Setup lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -126,7 +139,7 @@ void Game::load()
 	// Start music
 	//musicEvent = audioSystem.playEvent("event:/Music");
 
-	TargetActor* t = new TargetActor();
+	/*TargetActor* t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
 	t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
@@ -134,6 +147,7 @@ void Game::load()
 	t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
 	t = new TargetActor();
 	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
+*/
 }
 
 

@@ -23,7 +23,7 @@ FPSActor::FPSActor() :
 	moveComponent = new MoveComponent(this);
 	//audioComponent = new AudioComponent(this);
 	cameraComponent = new FPSCameraComponent(this);
-
+	
 	//footstep = audioComponent->playEvent("event:/Footstep");
 	//footstep.setPaused(true);
 

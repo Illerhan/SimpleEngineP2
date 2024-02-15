@@ -6,6 +6,7 @@
 #include "Vector2.h"
 #include "RendererOGL.h"
 #include "AudioSystem.h"
+#include "FollowCameraComponent.h"
 #include "InputSystem.h"
 #include "PhysicsSystem.h"
 #include "PlaneActor.h"
@@ -66,7 +67,9 @@ private:
 	// Game specific
 	//SoundEvent musicEvent;
 	class FPSActor* fps;
+	class FollowActor* tps;
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
+	FollowCameraComponent* fc;
 };
 

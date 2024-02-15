@@ -7,10 +7,15 @@ public:
 
 	void actorInput(const InputState& inputState) override;
 	void setVisible(bool isVisibleP);
+	void setSpeed(float speedP);
+	void fixCollisions();
+	void updateActor(float dt) override;
 
 private:
 	class MoveComponent* moveComponent;
 	class FollowCameraComponent* cameraComponent;
 	class MeshComponent* meshComponent;
+	float speed;
+	class BoxComponent* boxComponent;
 };
 

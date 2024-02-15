@@ -14,7 +14,7 @@ void FollowCameraComponent::update(float dt)
 {
 	CameraComponent::update(dt);
 
-	float dampening = 2.0f * Maths::sqrt(springConstant);
+	float dampening = 2.f * Maths::sqrt(springConstant);
 	Vector3 idealPosition = computeCameraPosition();
 	Vector3 diff = actualPosition - idealPosition;
 	Vector3 accel = -springConstant * diff - dampening * velocity;
@@ -62,3 +62,4 @@ Vector3 FollowCameraComponent::computeCameraPosition() const
 	cameraPosition += Vector3::unitZ * verticalDistance;
 	return cameraPosition;
 }
+
