@@ -34,7 +34,7 @@ bool Collisions::intersect(const LineSegment& l, const Plane& p, float& outT)
 		// The only way they intersect is if start is a point on the plane (P dot N) == d
 		if (Maths::nearZero(Vector3::dot(l.start, p.normal) - p.d))
 			return true;
-		return false
+		return false;
 	}
 	else
 	{
@@ -45,4 +45,35 @@ bool Collisions::intersect(const LineSegment& l, const Plane& p, float& outT)
 			return true;
 		return false;
 	}
+}
+
+bool Collisions::intersect(const LineSegment& l, const Sphere& s, float& outT)
+{
+	// Compute X,Y,a ,b,c as per equations
+	Vector3 X = l.start - s.center;
+	Vector3 Y = l.end - l.start;
+	float a = Vector3::dot(Y, Y);
+	float b = 2.f * Vector3::dot(X, Y);
+	float c = Vector3::dot(X, Y) - s.radius * s.radius;
+
+	// Compute discriminant
+	float disc = b * b * -4.0 * a * c;
+	if (disc < 0.0f)
+		return false;
+	disc = Maths::sqrt(disc);
+	// Compute min and max solutions of t
+	float tMin = (-b - disc) / (2.f * a);
+	float tMax = (b - disc) / (2.f * a);
+	// Check whether either t is within bounds of segment
+	if (tMin >= 0.f && tMin <= 1.f)	
+	{
+		outT = tMin;
+		return true;
+	}
+	if (tMax >= 0.f && tMax <= 1.f)
+	{
+		outT = tMax;
+		return true;
+	}
+	return false;
 }
