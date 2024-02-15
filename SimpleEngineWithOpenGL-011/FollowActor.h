@@ -1,17 +1,16 @@
 #pragma once
 #include "Actor.h"
-class FollowActor :
-    public Actor
+class FollowActor : public Actor
 {
 public:
-    FollowActor();
+	FollowActor();
 
-    void actorInput(const InputState& inputState) override;
-    void setVisible(bool isVisibleP);
+	void actorInput(const InputState& inputState) override;
+	void setVisible(bool isVisibleP);
 
 private:
-    class MoveComponent* moveComponent;
-    class FollowCameraComponent* cameraComponent;
-    class MeshComponent* meshComponent;
+	class MoveComponent* moveComponent;
+	class FollowCameraComponent* cameraComponent;
+	class MeshComponent* meshComponent;
 };
 

@@ -75,8 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\SDL\SDL2-2.0.12\include;..\SDL\SDL2_image-2.0.5\include;..\SDL\SDL2_mixer-2.0.4\include;..\SDL\SDL2_ttf-2.0.15\include;..\SDL\glew-2.1.0\include\GL;..\SDL\rapidjson\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\SDL\SDL2-2.0.12\lib\x64;..\SDL\SDL2_image-2.0.5\lib\x64;..\SDL\SDL2_mixer-2.0.4\lib\x64;..\SDL\SDL2_ttf-2.0.15\lib\x64;..\SDL\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\SDL\SDL2-2.0.12\include;..\SDL\SDL2_image-2.0.5\include;..\SDL\SDL2_mixer-2.0.4\include;..\SDL\SDL2_ttf-2.0.15\include;..\SDL\rapidjson\include;..\SDL\glew-2.1.0\include;..\SDL\FMOD-Audio-Engine-master\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\SDL\SDL2-2.0.12\lib\x64;..\SDL\SDL2_image-2.0.5\lib\x64;..\SDL\SDL2_mixer-2.0.4\lib\x64;..\SDL\SDL2_ttf-2.0.15\lib\x64;..\SDL\glew-2.1.0\lib\Release\x64;..\SDL\FMOD-Audio-Engine-master\Libraries x86 (Win32);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,6 +150,9 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="BackgroundSpriteComponent.cpp" />
+    <ClCompile Include="BallActor.cpp" />
+    <ClCompile Include="BallMoveComponent.cpp" />
+    <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CircleCollisionComponent.cpp" />
@@ -175,6 +178,7 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="OrbitActor.cpp" />
     <ClCompile Include="OrbitCameraComponent.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PlaneActor.cpp" />
     <ClCompile Include="Quaternion.cpp" />
@@ -189,6 +193,7 @@
     <ClCompile Include="SplineActor.cpp" />
     <ClCompile Include="SplineCameraComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="TargetActor.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -201,6 +206,9 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="BackgroundSpriteComponent.h" />
+    <ClInclude Include="BallActor.h" />
+    <ClInclude Include="BallMoveComponent.h" />
+    <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CircleCollisionComponent.h" />
@@ -228,6 +236,7 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="OrbitActor.h" />
     <ClInclude Include="OrbitCameraComponent.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PlaneActor.h" />
     <ClInclude Include="Quaternion.h" />
@@ -242,6 +251,7 @@
     <ClInclude Include="SplineActor.h" />
     <ClInclude Include="SplineCameraComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="TargetActor.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2.h" />

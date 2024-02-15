@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL_keyboard.h"
+#include <SDL_keyboard.h>
 
 class KeyboardState
 {
@@ -7,11 +7,10 @@ class KeyboardState
 
 public:
 	bool getKeyValue(SDL_Scancode key) const;
-	enum class ButtonState getkeyState(SDL_Scancode key) const;
+	enum class ButtonState getKeyState(SDL_Scancode key) const;
 
 private:
 	const Uint8* currentState;
 	Uint8 previousState[SDL_NUM_SCANCODES];
 };
-
 

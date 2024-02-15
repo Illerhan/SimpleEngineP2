@@ -18,7 +18,7 @@ void CircleCollisionComponent::setRadius(float radiusP)
 const Vector2 CircleCollisionComponent::getCenter() const
 {
 	Vector3 position = owner.getPosition();
-	return Vector2(position.y, position.z);
+	return Vector2(position.x, position.y);
 }
 
 bool Intersect(const CircleCollisionComponent& a, const CircleCollisionComponent& b)

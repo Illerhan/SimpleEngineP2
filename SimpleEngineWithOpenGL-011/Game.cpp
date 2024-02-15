@@ -3,14 +3,17 @@
 #include "Timer.h"
 #include "Assets.h"
 #include "MeshComponent.h"
-#include "Cube.h"
-#include "Sphere.h"
-#include "Plane.h"
-//#include "AudioComponent.h"
+#include "CubeActor.h"
+#include "SphereActor.h"
+#include "PlaneActor.h"
+#include "AudioComponent.h"
 #include "FPSActor.h"
 #include "FollowActor.h"
 #include "OrbitActor.h"
 #include "SplineActor.h"
+#include "TargetActor.h"
+#include <algorithm>
+#include <algorithm>
 
 bool Game::initialize()
 {
@@ -39,26 +42,25 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Textures\\Crosshair.png", "Crosshair");
 	Assets::loadTexture(renderer, "Res\\Textures\\RacingCar.png", "RacingCar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Rifle.png", "Rifle");
+	Assets::loadTexture(renderer, "Res\\Textures\\Target.png", "Target");
 
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
 	Assets::loadMesh("Res\\Meshes\\Rifle.gpmesh", "Mesh_Rifle");
 	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
+	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
 
 	fps = new FPSActor();
-	follow = new FollowActor();
-	orbit = new OrbitActor();
-	path = new SplineActor();
 
-	Cube* a = new Cube();
+	CubeActor* a = new CubeActor();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
 	a->setScale(100.0f);
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
 
-	Sphere* b = new Sphere();
+	SphereActor* b = new SphereActor();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
 
@@ -71,7 +73,7 @@ void Game::load()
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			Plane* p = new Plane();
+			PlaneActor* p = new PlaneActor();
 			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 	}
@@ -80,11 +82,11 @@ void Game::load()
 	q = Quaternion(Vector3::unitX, Maths::piOver2);
 	for (int i = 0; i < 10; i++)
 	{
-		Plane* p = new Plane();
+		PlaneActor* p = new PlaneActor();
 		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
 		p->setRotation(q);
 
-		p = new Plane();
+		p = new PlaneActor();
 		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
 		p->setRotation(q);
 	}
@@ -93,11 +95,11 @@ void Game::load()
 	// Forward/back walls
 	for (int i = 0; i < 10; i++)
 	{
-		Plane* p = new Plane();
+		PlaneActor* p = new PlaneActor();
 		p->setPosition(Vector3(start - size, start + i * size, 0.0f));
 		p->setRotation(q);
 
-		p = new Plane();
+		p = new PlaneActor();
 		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
 		p->setRotation(q);
 	}
@@ -110,9 +112,9 @@ void Game::load()
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 
 	// Create spheres with audio components playing different sounds
-	Sphere* soundSphere = new Sphere();
-	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
-	soundSphere->setScale(1.0f);
+	//SphereActor* soundSphere = new SphereActor();
+	//soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
+	//soundSphere->setScale(1.0f);
 	//AudioComponent* ac = new AudioComponent(soundSphere);
 	//ac->playEvent("event:/FireLoop");
 
@@ -124,8 +126,16 @@ void Game::load()
 	// Start music
 	//musicEvent = audioSystem.playEvent("event:/Music");
 
-	changeCamera(1);
+	TargetActor* t = new TargetActor();
+	t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
+	t = new TargetActor();
+	t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
+	t = new TargetActor();
+	t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
+	t = new TargetActor();
+	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
 }
+
 
 void Game::processInput()
 {
@@ -142,26 +152,9 @@ void Game::processInput()
 	const InputState& input = inputSystem.getInputState();
 
 	// Escape: quit game
-	if (input.keyboard.getkeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
+	if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
 	{
 		isRunning = false;
-	}
-
-	if (input.keyboard.getkeyState(SDL_SCANCODE_1) == ButtonState::Pressed)
-	{
-		changeCamera(1);
-	}
-	else if (input.keyboard.getkeyState(SDL_SCANCODE_2) == ButtonState::Pressed)
-	{
-		changeCamera(2);
-	}
-	else if (input.keyboard.getkeyState(SDL_SCANCODE_3) == ButtonState::Pressed)
-	{
-		changeCamera(3);
-	}
-	else if (input.keyboard.getkeyState(SDL_SCANCODE_4) == ButtonState::Pressed)
-	{
-		changeCamera(4);
 	}
 
 	// Actor input
@@ -180,14 +173,14 @@ void Game::update(float dt)
 
 	// Update actors 
 	isUpdatingActors = true;
-	for (auto actor : actors)
+	for(auto actor: actors) 
 	{
 		actor->update(dt);
 	}
 	isUpdatingActors = false;
 
 	// Move pending actors to actors
-	for (auto pendingActor : pendingActors)
+	for (auto pendingActor: pendingActors)
 	{
 		pendingActor->computeWorldTransform();
 		actors.emplace_back(pendingActor);
@@ -214,42 +207,6 @@ void Game::render()
 	renderer.beginDraw();
 	renderer.draw();
 	renderer.endDraw();
-}
-
-void Game::changeCamera(int mode)
-{
-	// Disable everything
-	fps->setState(Actor::ActorState::Paused);
-	fps->setVisible(false);
-	crosshair->setVisible(false);
-	follow->setState(Actor::ActorState::Paused);
-	follow->setVisible(false);
-	orbit->setState(Actor::ActorState::Paused);
-	orbit->setVisible(false);
-	path->setState(Actor::ActorState::Paused);
-
-	// Enable the camera specified by the mode
-	switch (mode)
-	{
-	case 1:
-	default:
-		fps->setState(Actor::ActorState::Active);
-		fps->setVisible(true);
-		crosshair->setVisible(true);
-		break;
-	case 2:
-		follow->setState(Actor::ActorState::Active);
-		follow->setVisible(true);
-		break;
-	case 3:
-		orbit->setState(Actor::ActorState::Active);
-		orbit->setVisible(true);
-		break;
-	case 4:
-		path->setState(Actor::ActorState::Active);
-		path->restartSpline();
-		break;
-	}
 }
 
 void Game::loop()
@@ -316,4 +273,15 @@ void Game::removeActor(Actor* actor)
 		std::iter_swap(iter, end(actors) - 1);
 		actors.pop_back();
 	}
+}
+
+void Game::addPlane(PlaneActor* plane)
+{
+	planes.emplace_back(plane);
+}
+
+void Game::removePlane(PlaneActor* plane)
+{
+	auto iter = std::find(begin(planes), end(planes), plane);
+	planes.erase(iter);
 }

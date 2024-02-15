@@ -2,7 +2,6 @@
 
 Plane::Plane(const Vector3& normalP, float dP) : normal(normalP), d(dP)
 {
-	
 }
 
 Plane::Plane(const Vector3& a, const Vector3& b, const Vector3& c)

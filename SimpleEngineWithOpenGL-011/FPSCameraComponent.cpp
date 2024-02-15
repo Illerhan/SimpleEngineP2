@@ -1,14 +1,11 @@
 #include "FPSCameraComponent.h"
 
-#include "Actor.h"
-
 FPSCameraComponent::FPSCameraComponent(Actor* ownerP):
 	CameraComponent(ownerP),
-	pitchSpeed(	0.0f),
+	pitchSpeed(0.0f),
 	maxPitch(Maths::pi / 3.0f),
 	pitch(0.0f)
 {
-	
 }
 
 void FPSCameraComponent::update(float dt)
@@ -18,7 +15,7 @@ void FPSCameraComponent::update(float dt)
 	Vector3 cameraPosition = owner.getPosition();
 	pitch += pitchSpeed * dt;
 	pitch = Maths::clamp(pitch, -maxPitch, maxPitch);
-	Quaternion q{ owner.getRight(), pitch };
+	Quaternion q { owner.getRight(), pitch };
 	Vector3 viewForward = Vector3::transform(owner.getForward(), q);
 
 	Vector3 target = cameraPosition + viewForward * 100.0f;
@@ -36,4 +33,3 @@ void FPSCameraComponent::setMaxPitch(float pitch)
 {
 	maxPitch = pitch;
 }
-

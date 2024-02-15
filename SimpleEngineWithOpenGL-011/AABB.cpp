@@ -5,7 +5,6 @@ using std::array;
 
 AABB::AABB(const Vector3& minP, const Vector3& maxP) : min(minP), max(maxP)
 {
-	
 }
 
 void AABB::updateMinMax(const Vector3& point)
@@ -21,8 +20,8 @@ void AABB::updateMinMax(const Vector3& point)
 
 void AABB::rotate(const Quaternion& q)
 {
-	// Construct the 8 points for the corners of hte box
-	array<Vector3, 8>points;
+	// Construct the 8 points for the corners of the box
+	array<Vector3, 8> points;
 	// Min point is always a corner
 	points[0] = min;
 	// Permutations with 2 min and 1 max
@@ -39,6 +38,9 @@ void AABB::rotate(const Quaternion& q)
 	// Rotate first point
 	Vector3 p = Vector3::transform(points[0], q);
 	// Reset min/max to first point rotated
+	min = p;
+	max = p;
+	// Update min/max based on remaining points, rotated
 	for (size_t i = 1; i < points.size(); i++)
 	{
 		p = Vector3::transform(points[i], q);
@@ -46,26 +48,26 @@ void AABB::rotate(const Quaternion& q)
 	}
 }
 
-float AABB::minDistSq(const Vector3& point) const
-{
-	// Compute difference for each axis
-	float dx = Maths::max(min.x - point.x, 0.f);
-	dx = Maths::max(dx, point.x - max.x);
-	float dy = Maths::max(min.y - point.y, 0.f);
-	dy = Maths::max(dy, point.y - max.y);
-	float dz = Maths::max(min.z - point.z, 0.f);
-	dz = Maths::max(dy, point.z - max.z);
-
-	return dx * dx + dy * dy + dz * dz;
-}
-
 bool AABB::contains(const Vector3& point) const
 {
-	bool outside = point.x<min.x ||
+	bool outside = point.x < min.x ||
 		point.y < min.y ||
 		point.z < min.z ||
 		point.x > max.x ||
 		point.y > max.y ||
 		point.z > max.z;
 	return !outside;
+}
+
+float AABB::minDistSq(const Vector3& point) const
+{
+	// Compute differences for each axis
+	float dx = Maths::max(min.x - point.x, 0.0f);
+	dx = Maths::max(dx, point.x - max.x);
+	float dy = Maths::max(min.y - point.y, 0.0f);
+	dy = Maths::max(dy, point.y - max.y);
+	float dz = Maths::max(min.z - point.z, 0.0f);
+	dz = Maths::max(dy, point.z - max.z);
+
+	return dx * dx + dy * dy + dz * dz;
 }

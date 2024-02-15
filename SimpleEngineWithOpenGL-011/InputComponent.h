@@ -1,6 +1,7 @@
 #pragma once
 #include "MoveComponent.h"
 #include <SDL_stdinc.h>
+#include <SDL_scancode.h>
 
 class InputComponent : public MoveComponent
 {
@@ -10,7 +11,7 @@ public:
 	InputComponent(const InputComponent&) = delete;
 	InputComponent& operator=(const InputComponent&) = delete;
 
-	void processInput(const InputState& inputState);
+	void processInput(const struct InputState& inputState);
 
 	void setMaxForwardSpeed(float maxForwardSpeedP);
 	void setMaxAngularSpeed(float maxAngularSpeedP);

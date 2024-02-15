@@ -6,7 +6,7 @@
 #include "MeshComponent.h"
 #include "Log.h"
 
-#include <glew.h>
+#include <GL/glew.h>
 #include <SDL_image.h>
 
 RendererOGL::RendererOGL():
@@ -15,7 +15,7 @@ RendererOGL::RendererOGL():
 	spriteVertexArray(nullptr),
 	spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)),
 	view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 25.0f, 10000.0f)),
+	projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 10.0f, 10000.0f)),
 	ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
 	dirLight({ Vector3::zero, Vector3::zero, Vector3::zero })
 {
@@ -93,6 +93,32 @@ void RendererOGL::close()
 	SDL_GL_DeleteContext(context);
 }
 
+Vector3 RendererOGL::unproject(const Vector3& screenPoint) const
+{
+	// Convert screenPoint to device coordinates (between -1 and +1)
+	Vector3 deviceCoord = screenPoint;
+	deviceCoord.x /= WINDOW_WIDTH * 0.5f;
+	deviceCoord.y /= WINDOW_HEIGHT * 0.5f;
+
+	// Transform vector by unprojection matrix
+	Matrix4 unprojection = view * projection;
+	unprojection.invert();
+	return Vector3::transformWithPerspDiv(deviceCoord, unprojection);
+}
+
+void RendererOGL::getScreenDirection(Vector3& outStart, Vector3& outDir) const
+{
+	// Get start point (in center of screen on near plane)
+	Vector3 screenPoint(0.0f, 0.0f, 0.0f);
+	outStart = unproject(screenPoint);
+	// Get end point (in center of screen, between near and far)
+	screenPoint.z = 0.9f;
+	Vector3 end = unproject(screenPoint);
+	// Get direction vector
+	outDir = end - outStart;
+	outDir.normalize();
+}
+
 void RendererOGL::drawMeshes()
 {
 	// Enable depth buffering/disable alpha blend
@@ -108,7 +134,9 @@ void RendererOGL::drawMeshes()
 	for (auto mc : meshes)
 	{
 		if (mc->getVisible())
+		{
 			mc->draw(Assets::getShader("Phong"));
+		}
 	}
 }
 
@@ -148,7 +176,9 @@ void RendererOGL::drawSprites()
 	for (auto sprite : sprites)
 	{
 		if (sprite->getVisible())
+		{
 			sprite->draw(*this);
+		}
 	}
 }
 

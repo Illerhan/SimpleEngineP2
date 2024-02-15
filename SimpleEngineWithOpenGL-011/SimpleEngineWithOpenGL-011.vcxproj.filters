@@ -116,6 +116,13 @@
     </ClCompile>
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Collisions.cpp" />
+    <ClCompile Include="BallMoveComponent.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
+    <ClCompile Include="BallActor.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxComponent.cpp" />
+    <ClCompile Include="TargetActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -239,6 +246,13 @@
     </ClInclude>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Collisions.h" />
+    <ClInclude Include="BallMoveComponent.h" />
+    <ClInclude Include="PhysicsSystem.h" />
+    <ClInclude Include="BallActor.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxComponent.h" />
+    <ClInclude Include="TargetActor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
