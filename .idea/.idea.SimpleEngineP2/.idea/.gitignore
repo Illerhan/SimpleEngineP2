@@ -4,8 +4,8 @@
 # Rider ignored files
 /modules.xml
 /contentModel.xml
-/.idea.SimpleEngineP2.iml
 /projectSettingsUpdater.xml
+/.idea.SimpleEngineP2.iml
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files
