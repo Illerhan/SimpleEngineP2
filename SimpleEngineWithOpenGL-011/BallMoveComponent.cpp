@@ -34,7 +34,7 @@ void BallMoveComponent::update(float dt)
 	if (owner.getGame().getPhysicsSystem().segmentCast(l, info) && info.actor != player)
 	{
 		// If we collided, reflect the ball about the normal
-		dir = Vector3::reflect(dir, info.normal);
+		dir = Vector3(1.f,0.f,0.f);
 		owner.rotateToNewForward(dir);
 		// Did we hit a target?
 		TargetActor* target = dynamic_cast<TargetActor*>(info.actor);

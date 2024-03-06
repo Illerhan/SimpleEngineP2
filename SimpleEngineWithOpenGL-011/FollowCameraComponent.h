@@ -25,7 +25,7 @@ private:
 	float springConstant;
 };
 
-constexpr float FOLLOW_HORIZONTAL_DISTANCE = 350.0f;
-constexpr float FOLLOW_VERTICAL_DISTANCE = 150.0f;
-constexpr float FOLLOW_TARGET_DISTANCE = 100.0f;
-constexpr float FOLLOW_SPRING_CONSTANT = 64.0f;
+constexpr float FOLLOW_HORIZONTAL_DISTANCE = 150.0f;
+constexpr float FOLLOW_VERTICAL_DISTANCE = 2000.0f;
+constexpr float FOLLOW_TARGET_DISTANCE = 550.0f;
+constexpr float FOLLOW_SPRING_CONSTANT = 1000.0f;

@@ -20,6 +20,7 @@
 
 bool Game::initialize()
 {
+	Random::init();
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
 	//bool isAudioInit = audioSystem.initialize();
@@ -30,6 +31,7 @@ bool Game::initialize()
 
 void Game::load()
 {
+	
 	inputSystem.setMouseRelativeMode(true);
 
 	Assets::loadShader("Res\\Shaders\\Sprite.vert", "Res\\Shaders\\Sprite.frag", "", "", "", "Sprite");
@@ -61,10 +63,10 @@ void Game::load()
 	fc = new FollowCameraComponent(tps);
 	fc->setSpringConstant(1000.f);
 	
-	for (int i = 0; i <15 ;i++)
+	for (int i = 0; i <30 ;i++)
 	{
 		CubeActor* a = new CubeActor();
-		a->setPosition(Vector3(Random::getFloatRange(2000,10000), Random::getFloatRange(-2000, 2000), 0.f));
+		a->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -200));
 		a->setScale(200.f);
 		
 	}
@@ -77,32 +79,35 @@ void Game::load()
 	// Floor and walls
 
 	// Setup floor
-	const float start = -2000.0f;
+	const float start = -10000.0f;
 	const float size = 1000.f;
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 20; i++)
 	{
-		for (int j = 0; j < 25; j++)
+		for (int j = 0; j < 15; j++)
 		{
 			PlaneActor* p = new PlaneActor();
-			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
+			p->setPosition(Vector3(-200 + i * size, start + j * size, -size/2));
+			
 		}
 	}
 
 	// Left/right walls
 	Quaternion q = Quaternion(Vector3::unitX, Maths::piOver2);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		
 		PlaneActor* p = new PlaneActor();
 		MeshComponent* mc = new MeshComponent(p);
-		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
+		p->setPosition(Vector3((-200 + i * size), 200 - size, 0.0f));
 		p->setRotation(q);
+		p->setScale(50.f);
 		mc->setVisible(false);
 		
 
 		p = new PlaneActor();
-		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
+		p->setPosition(Vector3((-200 + i * size), 200 + size, 0.0f));
 		p->setRotation(q);
+		p->setScale(50.f);
 
 		
 	}

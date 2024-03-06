@@ -10,6 +10,7 @@ public:
 	void setSpeed(float speedP);
 	void fixCollisions();
 	void updateActor(float dt) override;
+	void shoot();
 
 private:
 	class MoveComponent* moveComponent;
