@@ -97,6 +97,7 @@ void Game::load()
 		MeshComponent* mc = new MeshComponent(p);
 		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
 		p->setRotation(q);
+		mc->setVisible(false);
 		
 
 		p = new PlaneActor();
