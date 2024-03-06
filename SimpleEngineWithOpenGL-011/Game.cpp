@@ -66,7 +66,7 @@ void Game::load()
 	for (int i = 0; i <30 ;i++)
 	{
 		CubeActor* a = new CubeActor();
-		a->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -200));
+		a->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -450));
 		a->setScale(200.f);
 		
 	}
