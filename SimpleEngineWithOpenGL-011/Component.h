@@ -13,8 +13,9 @@ public:
 	Component& operator=(const Component&) = delete;
 
 	int getUpdateOrder() const { return updateOrder; }
+	class Actor& getOwner() { return owner; }
 
-	virtual void processInput(const Uint8* keyState);
+	virtual void processInput(const struct InputState& inputState);
 	virtual void update(float dt);
 	virtual void onUpdateWorldTransform() {}
 

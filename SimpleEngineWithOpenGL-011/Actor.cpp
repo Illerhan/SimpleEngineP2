@@ -44,6 +44,20 @@ void Actor::setRotation(Quaternion rotationP)
 	mustRecomputeWorldTransform = true;
 }
 
+void Actor::rotate(const Vector3& axis, float angle)
+{
+	Quaternion newRotation = rotation;
+	Quaternion increment(axis, angle);
+	newRotation = Quaternion::concatenate(newRotation, increment);
+	setRotation(newRotation);
+}
+
+void Actor::setAngle(const Vector3& axis, float angle)
+{
+	Quaternion newRotation(axis, angle);
+	setRotation(newRotation);
+}
+
 void Actor::setState(ActorState stateP)
 {
 	state = stateP;
@@ -52,6 +66,11 @@ void Actor::setState(ActorState stateP)
 Vector3 Actor::getForward() const
 {
 	return Vector3::transform(Vector3::unitX, rotation);
+}
+
+Vector3 Actor::getRight() const
+{
+	return Vector3::transform(Vector3::unitY, rotation);
 }
 
 void Actor::computeWorldTransform()
@@ -70,19 +89,43 @@ void Actor::computeWorldTransform()
 	}
 }
 
-void Actor::processInput(const Uint8* keyState)
+void Actor::rotateToNewForward(const Vector3& newForward)
+{
+	// Figure out difference between original (unit x) and new
+	float dot = Vector3::dot(Vector3::unitX, newForward);
+	float angle = Maths::acos(dot);
+	// Facing down X
+	if (dot > 0.9999f)
+	{
+		setRotation(Quaternion::identity);
+	}
+	// Facing down -X
+	else if (dot < -0.9999f)
+	{
+		setRotation(Quaternion(Vector3::unitZ, Maths::pi));
+	}
+	else
+	{
+		// Rotate about axis from cross product
+		Vector3 axis = Vector3::cross(Vector3::unitX, newForward);
+		axis.normalize();
+		setRotation(Quaternion(axis, angle));
+	}
+}
+
+void Actor::processInput(const InputState& inputState)
 {
 	if (state == Actor::ActorState::Active)
 	{
 		for (auto component : components)
 		{
-			component->processInput(keyState);
+			component->processInput(inputState);
 		}
-		actorInput(keyState);
+		actorInput(inputState);
 	}
 }
 
-void Actor::actorInput(const Uint8* keyState)
+void Actor::actorInput(const InputState& inputState)
 {
 }
 
