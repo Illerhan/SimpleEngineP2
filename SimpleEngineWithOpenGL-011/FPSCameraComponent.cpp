@@ -4,7 +4,7 @@ FPSCameraComponent::FPSCameraComponent(Actor* ownerP):
 	CameraComponent(ownerP),
 	pitchSpeed(0.0f),
 	maxPitch(Maths::pi / 3.0f),
-	pitch(0.0f)
+	pitch(0.5f)
 {
 }
 
@@ -12,7 +12,7 @@ void FPSCameraComponent::update(float dt)
 {
 	CameraComponent::update(dt);
 
-	Vector3 cameraPosition = owner.getPosition();
+	Vector3 cameraPosition = owner.getPosition() + Vector3(0,0,20);
 	pitch += pitchSpeed * dt;
 	pitch = Maths::clamp(pitch, -maxPitch, maxPitch);
 	Quaternion q { owner.getRight(), pitch };

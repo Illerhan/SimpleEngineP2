@@ -58,11 +58,21 @@ void Game::load()
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
 	
 	fps = new FPSActor();
-	fps->setPosition(Vector3(-50.f,37.f,75.f));
+	fps->setPosition(Vector3(-50.f,37.f,35.f));
 	//follow->setScale(Vector3(0.2f,0.2f,0.2f));
 	//fps = new FPSActor();
 
+	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
+	//q = Quaternion::concatenate(q, Quaternion(Vector3::unitX, Maths::pi + Maths::pi / 4.0f));
+	
+	// "Arrow"
 
+	arrow = new CubeActor();
+	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
+	arrow->setScale(Vector3(50.0f,10.0f,1.0));
+	arrow->setRotation(q);
+	
+	
 	// First line
 	
 	CubeActor* a1 = new CubeActor();
@@ -112,8 +122,7 @@ void Game::load()
 	a10->setScale(Vector3(10.0f,10.0f,30.0));
 	
 	
-	Quaternion q(Vector3::unitY, -Maths::piOver2);
-	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+	
 	// a->setRotation(q);
 
 	// SphereActor* b = new SphereActor();
@@ -228,7 +237,7 @@ void Game::update(float dt)
 {
 	// Update audio
 	//audioSystem.update(dt);
-
+	
 	// Update actors
 	
 	isUpdatingActors = true;
@@ -272,12 +281,40 @@ void Game::loop()
 {
 	Timer timer;
 	float dt = 0;
+	float scale = 50;
+	bool positive = true;
+	float rotateDire = Maths::piOver2/2*dt;
 	while (isRunning)
 	{
 		float dt = timer.computeDeltaTime() / 1000.0f;
 		processInput();
 		update(dt);
 		render();
+		
+		if(scale <= 150 && positive)
+			scale += 20* dt;
+		if(scale <= 160 && !positive)
+		{
+			scale -= 20* dt;
+			std::cout << positive << "\n";
+		}
+		if (scale >= 150)
+		{
+			positive = false;
+		}
+		if (scale <= 50)
+			positive = true;
+		std::cout << positive << "\n";
+
+		if (arrow->getRotation().z >= -0.40 && arrow->getRotation().z <=-0.38)
+			rotateDire = Maths::piOver2/2*dt;
+
+		if(arrow->getRotation().z >= 0.35)
+			rotateDire = -Maths::piOver2/2*dt;
+		
+		
+		arrow->rotate(Vector3::unitZ,rotateDire);
+		arrow->setScale(Vector3(scale,10,1));
 		timer.delayTime();
 		
 	}

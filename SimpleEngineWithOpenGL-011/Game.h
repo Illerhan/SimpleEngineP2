@@ -67,7 +67,9 @@ private:
 	//SoundEvent musicEvent;
 	class FPSActor* fps;
 	class FollowActor* follow;
+	class CubeActor* arrow;
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
+	class Quaternion q();
 };
 

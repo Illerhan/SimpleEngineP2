@@ -9,16 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7fba5a5-5c58-458f-9d0b-a93bf164e4bb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Actor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Actor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Actor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Actor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BoxComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BoxComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CircleCollisionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CircleCollisionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FollowActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FollowActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FollowCameraComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FollowCameraComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSCameraComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSCameraComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/PlaneActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/PlaneActor.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,6 +198,8 @@
       <workItem from="1710172893077" duration="2937000" />
       <workItem from="1710175868114" duration="1104000" />
       <workItem from="1710234582269" duration="4447000" />
+      <workItem from="1710241361551" duration="636000" />
+      <workItem from="1710250157859" duration="6659000" />
     </task>
     <task id="LOCAL-00001" summary="[update] Modifie camera positio nand shooting systeme">
       <option name="closed" value="true" />

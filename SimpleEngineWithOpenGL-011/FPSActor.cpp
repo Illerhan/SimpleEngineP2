@@ -85,12 +85,13 @@ void FPSActor::shoot()
 	screenPoint.z = 0.9f;
 	Vector3 end = getGame().getRenderer().unproject(screenPoint);
 	// Get direction vector
-	Vector3 dir = end - start;
+	Vector3 dir = Vector3(1,0,0);
 	dir.normalize();
 	// Spawn a ball
 	BallActor* ball = new BallActor();
 	ball->setPlayer(this);
-	ball->setPosition(start + dir * 20.0f);
+	ball->setPosition(Vector3(-50,35,10));
+	ball->setScale(Vector3(0.75,0.75,0.75));
 	// Rotate the ball to face new direction
 	ball->rotateToNewForward(dir);
 	// Play shooting sound
