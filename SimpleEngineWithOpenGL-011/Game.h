@@ -38,6 +38,7 @@ public:
 
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
+	class CubeActor* getArrow() {return arrow; }
 	RendererOGL& getRenderer() { return renderer; }
 	//AudioSystem& getAudioSystem() { return audioSystem; }
 	PhysicsSystem& getPhysicsSystem() { return physicsSystem; }

@@ -10,6 +10,8 @@
 #include "BallActor.h"
 #include "BoxComponent.h"
 #include "Collisions.h"
+#include "CubeActor.h"
+
 
 FPSActor::FPSActor() : 
 	Actor(), 
@@ -83,9 +85,11 @@ void FPSActor::shoot()
 	Vector3 start = getGame().getRenderer().unproject(screenPoint);
 	// Get end point (in center of screen, between near and far)
 	screenPoint.z = 0.9f;
+	
 	Vector3 end = getGame().getRenderer().unproject(screenPoint);
 	// Get direction vector
-	Vector3 dir = Vector3(1,0,0);
+	
+	Vector3 dir = Vector3(getGame().getArrow()->getRotation().w,getGame().getArrow()->getRotation().z,0);
 	dir.normalize();
 	// Spawn a ball
 	BallActor* ball = new BallActor();

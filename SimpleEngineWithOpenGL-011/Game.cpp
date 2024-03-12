@@ -292,11 +292,10 @@ void Game::loop()
 		render();
 		
 		if(scale <= 150 && positive)
-			scale += 20* dt;
+			scale += 50* dt;
 		if(scale <= 160 && !positive)
 		{
-			scale -= 20* dt;
-			std::cout << positive << "\n";
+			scale -= 50* dt;
 		}
 		if (scale >= 150)
 		{
@@ -304,7 +303,6 @@ void Game::loop()
 		}
 		if (scale <= 50)
 			positive = true;
-		std::cout << positive << "\n";
 
 		if (arrow->getRotation().z >= -0.40 && arrow->getRotation().z <=-0.38)
 			rotateDire = Maths::piOver2/2*dt;
@@ -315,8 +313,8 @@ void Game::loop()
 		
 		arrow->rotate(Vector3::unitZ,rotateDire);
 		arrow->setScale(Vector3(scale,10,1));
-		timer.delayTime();
 		
+		timer.delayTime();
 	}
 }
 
