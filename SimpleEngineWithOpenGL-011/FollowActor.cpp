@@ -13,7 +13,7 @@ FollowActor::FollowActor() :
 {
 	meshComponent = new MeshComponent(this);
 	meshComponent->setMesh(Assets::getMesh("Mesh_RacingCar"));
-	setPosition(Vector3(0.0f, 0.0f, -100.0f));
+	setPosition(Vector3(0.0f, 0.0f, 0.0f));
 
 	moveComponent = new MoveComponent(this);
 	cameraComponent = new FollowCameraComponent(this);
@@ -27,11 +27,11 @@ void FollowActor::actorInput(const InputState& inputState)
 	// wasd movement
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W))
 	{
-		forwardSpeed += 400.0f;
+		forwardSpeed += 1000.0f;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S))
 	{
-		forwardSpeed -= 400.0f;
+		forwardSpeed -= 1000.0f;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A))
 	{

@@ -6,7 +6,7 @@
 
 PlaneActor::PlaneActor() : Actor()
 {
-	setScale(10.0f);
+	setScale(Vector3(1.0f, 1.f,1.f));
 	MeshComponent* mc = new MeshComponent(this);
 	Mesh* mesh = &Assets::getMesh("Mesh_Plane");
 	mc->setMesh(*mesh);

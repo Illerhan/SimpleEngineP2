@@ -12,8 +12,14 @@
 #include "OrbitActor.h"
 #include "SplineActor.h"
 #include "TargetActor.h"
+#include "FollowActor.h"
 #include <algorithm>
 #include <algorithm>
+
+#include "FollowCameraComponent.h"
+
+using namespace std;
+
 
 bool Game::initialize()
 {
@@ -50,59 +56,111 @@ void Game::load()
 	Assets::loadMesh("Res\\Meshes\\Rifle.gpmesh", "Mesh_Rifle");
 	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
-
+	
 	fps = new FPSActor();
+	fps->setPosition(Vector3(0.f,0.f,75.f));
+	//follow->setScale(Vector3(0.2f,0.2f,0.2f));
+	//fps = new FPSActor();
 
-	CubeActor* a = new CubeActor();
-	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
-	a->setScale(100.0f);
+
+	// First line
+	
+	CubeActor* a1 = new CubeActor();
+	a1->setPosition(Vector3(700.0f, 75.0f, 15.0f));
+	a1->setScale(Vector3(10.0f,10.0f,30.0));
+
+	CubeActor* a2 = new CubeActor();
+	a2->setPosition(Vector3(700.0f, 50.0f, 15.0f));
+	a2->setScale(Vector3(10.0f,10.0f,30.0));
+
+	CubeActor* a3 = new CubeActor();
+	a3->setPosition(Vector3(700.0f, 25.0f, 15.0f));
+	a3->setScale(Vector3(10.0f,10.0f,30.0));
+	
+	CubeActor* a4 = new CubeActor();
+	a4->setPosition(Vector3(700.0f, 0.0f, 15.0f));
+	a4->setScale(Vector3(10.0f,10.0f,30.0));
+
+	// Second line
+
+	CubeActor* a5 = new CubeActor();
+	a5->setPosition(Vector3(675.0f, 62.0f, 15.0f));
+	a5->setScale(Vector3(10.0f,10.0f,30.0));
+	
+	CubeActor* a6 = new CubeActor();
+	a6->setPosition(Vector3(675.0f, 37.0f, 15.0f));
+	a6->setScale(Vector3(10.0f,10.0f,30.0));
+	
+	CubeActor* a7 = new CubeActor();
+	a7->setPosition(Vector3(675.0f, 12.0f, 15.0f));
+	a7->setScale(Vector3(10.0f,10.0f,30.0));
+	
+	// Third line
+
+	CubeActor* a8 = new CubeActor();
+	a8->setPosition(Vector3(650.0f, 50.0f, 15.0f));
+	a8->setScale(Vector3(10.0f,10.0f,30.0));
+
+	CubeActor* a9= new CubeActor();
+	a9->setPosition(Vector3(650.0f, 25.0f, 15.0f));
+	a9->setScale(Vector3(10.0f,10.0f,30.0));
+
+	// Last
+
+	CubeActor* a10 = new CubeActor();
+	a10->setPosition(Vector3(625.0f, 37.0f, 15.0f));
+	a10->setScale(Vector3(10.0f,10.0f,30.0));
+	
+	
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
-	a->setRotation(q);
+	// a->setRotation(q);
 
-	SphereActor* b = new SphereActor();
-	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	b->setScale(3.0f);
+	// SphereActor* b = new SphereActor();
+	// b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
+	// b->setScale(3.0f);
 
 	// Floor and walls
 
 	// Setup floor
-	const float start = -1250.0f;
-	const float size = 250.0f;
+	const float start = 0.0f;
+	const float size = 75.0f;
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 2; j++)
 		{
 			PlaneActor* p = new PlaneActor();
-			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
+			p->setScale(Vector3(1.f,1.f,1.f));
+			p->setPosition(Vector3(start + i * size, start +j * size, 0.0f));
 		}
 	}
+	
 
-	// Left/right walls
-	q = Quaternion(Vector3::unitX, Maths::piOver2);
-	for (int i = 0; i < 10; i++)
-	{
-		PlaneActor* p = new PlaneActor();
-		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
-		p->setRotation(q);
-
-		p = new PlaneActor();
-		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
-		p->setRotation(q);
-	}
+	// // Left/right walls
+	// q = Quaternion(Vector3::unitX, Maths::piOver2);
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	PlaneActor* p = new PlaneActor();
+	// 	p->setPosition(Vector3(start + i * size, start - size, 0.0f));
+	// 	p->setRotation(q);
+	//
+	// 	p = new PlaneActor();
+	// 	p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
+	// 	p->setRotation(q);
+	// }
 
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
 	// Forward/back walls
-	for (int i = 0; i < 10; i++)
-	{
-		PlaneActor* p = new PlaneActor();
-		p->setPosition(Vector3(start - size, start + i * size, 0.0f));
-		p->setRotation(q);
-
-		p = new PlaneActor();
-		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
-		p->setRotation(q);
-	}
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	PlaneActor* p = new PlaneActor();
+	// 	p->setPosition(Vector3(start - size, start + i * size, 0.0f));
+	// 	p->setRotation(q);
+	//
+	// 	p = new PlaneActor();
+	// 	p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
+	// 	p->setRotation(q);
+	// }
 
 	// Setup lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -119,21 +177,21 @@ void Game::load()
 	//ac->playEvent("event:/FireLoop");
 
 	// Corsshair
-	Actor* crosshairActor = new Actor();
-	crosshairActor->setScale(2.0f);
-	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
+	// Actor* crosshairActor = new Actor();
+	// crosshairActor->setScale(2.0f);
+	// crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
 
 	// Start music
 	//musicEvent = audioSystem.playEvent("event:/Music");
 
-	TargetActor* t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
+	// TargetActor* t = new TargetActor();
+	// t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
+	// t = new TargetActor();
+	// t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
+	// t = new TargetActor();
+	// t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
+	// t = new TargetActor();
+	// t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
 }
 
 
@@ -171,7 +229,8 @@ void Game::update(float dt)
 	// Update audio
 	//audioSystem.update(dt);
 
-	// Update actors 
+	// Update actors
+	
 	isUpdatingActors = true;
 	for(auto actor: actors) 
 	{
@@ -220,6 +279,7 @@ void Game::loop()
 		update(dt);
 		render();
 		timer.delayTime();
+		
 	}
 }
 

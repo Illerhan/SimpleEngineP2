@@ -66,6 +66,7 @@ private:
 	// Game specific
 	//SoundEvent musicEvent;
 	class FPSActor* fps;
+	class FollowActor* follow;
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
 };

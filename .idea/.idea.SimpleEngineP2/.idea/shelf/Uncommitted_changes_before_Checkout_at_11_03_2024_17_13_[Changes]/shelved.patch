@@ -1,0 +1,112 @@
+Index: SimpleEngineWithOpenGL-011/Game.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"Game.h\"\r\n#include \"Actor.h\"\r\n#include \"Timer.h\"\r\n#include \"Assets.h\"\r\n#include \"MeshComponent.h\"\r\n#include \"CubeActor.h\"\r\n#include \"SphereActor.h\"\r\n#include \"PlaneActor.h\"\r\n#include \"AudioComponent.h\"\r\n#include \"FPSActor.h\"\r\n#include \"FollowActor.h\"\r\n#include \"OrbitActor.h\"\r\n#include \"SplineActor.h\"\r\n#include \"TargetActor.h\"\r\n#include <algorithm>\r\n#include <algorithm>\r\n\r\n#include \"FollowCameraComponent.h\"\r\n#include \"Random.h\"\r\n\r\nbool Game::initialize()\r\n{\r\n\tRandom::init();\r\n\tbool isWindowInit = window.initialize();\r\n\tbool isRendererInit = renderer.initialize(window);\r\n\t//bool isAudioInit = audioSystem.initialize();\r\n\tbool isInputInit = inputSystem.initialize();\r\n\r\n\treturn isWindowInit && isRendererInit /*&& isAudioInit*/ && isInputInit; // Return bool && bool && bool ...to detect error\r\n}\r\n\r\nvoid Game::load()\r\n{\r\n\t\r\n\tinputSystem.setMouseRelativeMode(true);\r\n\r\n\tAssets::loadShader(\"Res\\\\Shaders\\\\Sprite.vert\", \"Res\\\\Shaders\\\\Sprite.frag\", \"\", \"\", \"\", \"Sprite\");\r\n\tAssets::loadShader(\"Res\\\\Shaders\\\\Phong.vert\", \"Res\\\\Shaders\\\\Phong.frag\", \"\", \"\", \"\", \"Phong\");\r\n\tAssets::loadShader(\"Res\\\\Shaders\\\\BasicMesh.vert\", \"Res\\\\Shaders\\\\BasicMesh.frag\", \"\", \"\", \"\", \"BasicMesh\");\r\n\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Default.png\", \"Default\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Cube.png\", \"Cube\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\HealthBar.png\", \"HealthBar\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Plane.png\", \"Plane\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Radar.png\", \"Radar\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Sphere.png\", \"Sphere\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Crosshair.png\", \"Crosshair\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\RacingCar.png\", \"RacingCar\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Rifle.png\", \"Rifle\");\r\n\tAssets::loadTexture(renderer, \"Res\\\\Textures\\\\Target.png\", \"Target\");\r\n\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\Cube.gpmesh\", \"Mesh_Cube\");\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\Plane.gpmesh\", \"Mesh_Plane\");\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\Sphere.gpmesh\", \"Mesh_Sphere\");\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\Rifle.gpmesh\", \"Mesh_Rifle\");\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\RacingCar.gpmesh\", \"Mesh_RacingCar\");\r\n\tAssets::loadMesh(\"Res\\\\Meshes\\\\Target.gpmesh\", \"Mesh_Target\");\r\n\r\n\ttps = new FollowActor();\r\n\ttps->setPosition(Vector3(0.f, 0.f, 500.f));\r\n\ttps->setScale(0.5f);\r\n\ttps->setSpeed(300.f);\r\n\tfc = new FollowCameraComponent(tps);\r\n\tfc->setSpringConstant(1000.f);\r\n\t\r\n\tfor (int i = 0; i <30 ;i++)\r\n\t{\r\n\t\tCubeActor* a = new CubeActor();\r\n\t\ta->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -450));\r\n\t\ta->setScale(200.f);\r\n\t\t\r\n\t}\r\n\t\r\n\r\n\t//SphereActor* b = new SphereActor();\r\n\t//b->setPosition(Vector3(200.0f, -75.0f, 0.0f));\r\n\t//b->setScale(3.0f);\r\n\r\n\t// Floor and walls\r\n\r\n\t// Setup floor\r\n\tconst float start = -10000.0f;\r\n\tconst float size = 1000.f;\r\n\tfor (int i = 0; i < 20; i++)\r\n\t{\r\n\t\tfor (int j = 0; j < 15; j++)\r\n\t\t{\r\n\t\t\tPlaneActor* p = new PlaneActor();\r\n\t\t\tp->setPosition(Vector3(-200 + i * size, start + j * size, -size/2));\r\n\t\t\t\r\n\t\t}\r\n\t}\r\n\r\n\t// Left/right walls\r\n\tQuaternion q = Quaternion(Vector3::unitX, Maths::piOver2);\r\n\tfor (int i = 0; i < 20; i++)\r\n\t{\r\n\t\t\r\n\t\tPlaneActor* p = new PlaneActor();\r\n\t\tMeshComponent* mc = new MeshComponent(p);\r\n\t\tp->setPosition(Vector3((-200 + i * size), 200 - size, 0.0f));\r\n\t\tp->setRotation(q);\r\n\t\tp->setScale(50.f);\r\n\t\tmc->setVisible(false);\r\n\t\t\r\n\r\n\t\tp = new PlaneActor();\r\n\t\tp->setPosition(Vector3((-200 + i * size), 200 + size, 0.0f));\r\n\t\tp->setRotation(q);\r\n\t\tp->setScale(50.f);\r\n\r\n\t\t\r\n\t}\r\n\r\n\t//q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));\r\n\t// Forward/back walls\r\n\t/*for (int i = 0; i < 10; i++)\r\n\t{\r\n\t\tPlaneActor* p = new PlaneActor();\r\n\t\tp->setPosition(Vector3(start - size, start + i * size, 0.0f));\r\n\t\tp->setRotation(q);\r\n\r\n\t\tp = new PlaneActor();\r\n\t\tp->setPosition(Vector3(-start + size, start + i * size, 0.0f));\r\n\t\tp->setRotation(q);\r\n\t}*/\r\n\r\n\t// Setup lights\r\n\trenderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));\r\n\tDirectionalLight& dir = renderer.getDirectionalLight();\r\n\tdir.direction = Vector3(0.0f, -0.707f, -0.707f);\r\n\tdir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);\r\n\tdir.specColor = Vector3(0.8f, 0.8f, 0.8f);\r\n\r\n\t// Create spheres with audio components playing different sounds\r\n\t//SphereActor* soundSphere = new SphereActor();\r\n\t//soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));\r\n\t//soundSphere->setScale(1.0f);\r\n\t//AudioComponent* ac = new AudioComponent(soundSphere);\r\n\t//ac->playEvent(\"event:/FireLoop\");\r\n\r\n\t// Corsshair\r\n\tActor* crosshairActor = new Actor();\r\n\tcrosshairActor->setScale(2.0f);\r\n\tcrosshair = new SpriteComponent(crosshairActor, Assets::getTexture(\"Crosshair\"));\r\n\r\n\t// Start music\r\n\t//musicEvent = audioSystem.playEvent(\"event:/Music\");\r\n\r\n\t/*TargetActor* t = new TargetActor();\r\n\tt->setPosition(Vector3(1450.0f, 0.0f, 100.0f));\r\n\tt = new TargetActor();\r\n\tt->setPosition(Vector3(1450.0f, 0.0f, 400.0f));\r\n\tt = new TargetActor();\r\n\tt->setPosition(Vector3(1450.0f, -500.0f, 200.0f));\r\n\tt = new TargetActor();\r\n\tt->setPosition(Vector3(1450.0f, 500.0f, 200.0f));\r\n*/\r\n}\r\n\r\n\r\nvoid Game::processInput()\r\n{\r\n\tinputSystem.preUpdate();\r\n\r\n\t// SDL Event\r\n\tSDL_Event event;\r\n\twhile (SDL_PollEvent(&event))\r\n\t{\r\n\t\tisRunning = inputSystem.processEvent(event);\r\n\t}\r\n\r\n\tinputSystem.update();\r\n\tconst InputState& input = inputSystem.getInputState();\r\n\r\n\t// Escape: quit game\r\n\tif (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)\r\n\t{\r\n\t\tisRunning = false;\r\n\t}\r\n\r\n\t// Actor input\r\n\tisUpdatingActors = true;\r\n\tfor (auto actor : actors)\r\n\t{\r\n\t\tactor->processInput(input);\r\n\t}\r\n\tisUpdatingActors = false;\r\n}\r\n\r\nvoid Game::update(float dt)\r\n{\r\n\t// Update audio\r\n\t//audioSystem.update(dt);\r\n\r\n\t// Update actors \r\n\tisUpdatingActors = true;\r\n\tfor(auto actor: actors) \r\n\t{\r\n\t\tactor->update(dt);\r\n\t}\r\n\tisUpdatingActors = false;\r\n\r\n\t// Move pending actors to actors\r\n\tfor (auto pendingActor: pendingActors)\r\n\t{\r\n\t\tpendingActor->computeWorldTransform();\r\n\t\tactors.emplace_back(pendingActor);\r\n\t}\r\n\tpendingActors.clear();\r\n\r\n\t// Delete dead actors\r\n\tvector<Actor*> deadActors;\r\n\tfor (auto actor : actors)\r\n\t{\r\n\t\tif (actor->getState() == Actor::ActorState::Dead)\r\n\t\t{\r\n\t\t\tdeadActors.emplace_back(actor);\r\n\t\t}\r\n\t}\r\n\tfor (auto deadActor : deadActors)\r\n\t{\r\n\t\tdelete deadActor;\r\n\t}\r\n}\r\n\r\nvoid Game::render()\r\n{\r\n\trenderer.beginDraw();\r\n\trenderer.draw();\r\n\trenderer.endDraw();\r\n}\r\n\r\nvoid Game::loop()\r\n{\r\n\tTimer timer;\r\n\tfloat dt = 0;\r\n\twhile (isRunning)\r\n\t{\r\n\t\tfloat dt = timer.computeDeltaTime() / 1000.0f;\r\n\t\tprocessInput();\r\n\t\tupdate(dt);\r\n\t\trender();\r\n\t\ttimer.delayTime();\r\n\t}\r\n}\r\n\r\nvoid Game::unload()\r\n{\r\n\t// Delete actors\r\n\t// Because ~Actor calls RemoveActor, have to use a different style loop\r\n\twhile (!actors.empty())\r\n\t{\r\n\t\tdelete actors.back();\r\n\t}\r\n\r\n\t// Resources\r\n\tAssets::clear();\r\n}\r\n\r\nvoid Game::close()\r\n{\r\n\tinputSystem.close();\r\n\trenderer.close();\r\n\t//audioSystem.close();\r\n\twindow.close();\r\n\tSDL_Quit();\r\n}\r\n\r\nvoid Game::addActor(Actor* actor)\r\n{\r\n\tif (isUpdatingActors)\r\n\t{\r\n\t\tpendingActors.emplace_back(actor);\r\n\t}\r\n\telse\r\n\t{\r\n\t\tactors.emplace_back(actor);\r\n\t}\r\n}\r\n\r\nvoid Game::removeActor(Actor* actor)\r\n{\r\n\t// Erase actor from the two vectors\r\n\tauto iter = std::find(begin(pendingActors), end(pendingActors), actor);\r\n\tif (iter != end(pendingActors))\r\n\t{\r\n\t\t// Swap to end of vector and pop off (avoid erase copies)\r\n\t\tstd::iter_swap(iter, end(pendingActors) - 1);\r\n\t\tpendingActors.pop_back();\r\n\t}\r\n\titer = std::find(begin(actors), end(actors), actor);\r\n\tif (iter != end(actors))\r\n\t{\r\n\t\tstd::iter_swap(iter, end(actors) - 1);\r\n\t\tactors.pop_back();\r\n\t}\r\n}\r\n\r\nvoid Game::addPlane(PlaneActor* plane)\r\n{\r\n\tplanes.emplace_back(plane);\r\n}\r\n\r\nvoid Game::removePlane(PlaneActor* plane)\r\n{\r\n\tauto iter = std::find(begin(planes), end(planes), plane);\r\n\tplanes.erase(iter);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SimpleEngineWithOpenGL-011/Game.cpp b/SimpleEngineWithOpenGL-011/Game.cpp
+--- a/SimpleEngineWithOpenGL-011/Game.cpp	(revision c71d04081b2f6fd4ccb2e8b64ae68be7e68ca222)
++++ b/SimpleEngineWithOpenGL-011/Game.cpp	(date 1710173545229)
+@@ -59,17 +59,17 @@
+ 	tps = new FollowActor();
+ 	tps->setPosition(Vector3(0.f, 0.f, 500.f));
+ 	tps->setScale(0.5f);
+-	tps->setSpeed(300.f);
++	tps->setSpeed(0.f);
+ 	fc = new FollowCameraComponent(tps);
+ 	fc->setSpringConstant(1000.f);
+ 	
+-	for (int i = 0; i <30 ;i++)
+-	{
+-		CubeActor* a = new CubeActor();
+-		a->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -450));
+-		a->setScale(200.f);
+-		
+-	}
++	// for (int i = 0; i <30 ;i++)
++	// {
++	// 	CubeActor* a = new CubeActor();
++	// 	a->setPosition(Vector3(Random::getFloatRange(2000,20000), Random::getFloatRange(-950, 950), -450));
++	// 	a->setScale(200.f);
++	// 	
++	// }
+ 	
+ 
+ 	//SphereActor* b = new SphereActor();
+@@ -79,38 +79,38 @@
+ 	// Floor and walls
+ 
+ 	// Setup floor
+-	const float start = -10000.0f;
+-	const float size = 1000.f;
+-	for (int i = 0; i < 20; i++)
++	const float start = 0.0f;
++	const float size = 400.f;
++	for (int i = 0; i < 10; i++)
+ 	{
+-		for (int j = 0; j < 15; j++)
++		for (int j = 0; j < 5; j++)
+ 		{
+ 			PlaneActor* p = new PlaneActor();
+-			p->setPosition(Vector3(-200 + i * size, start + j * size, -size/2));
++			p->setPosition(Vector3(0 + i * size, start + j * size, -size/2));
+ 			
+ 		}
+ 	}
+ 
+ 	// Left/right walls
+-	Quaternion q = Quaternion(Vector3::unitX, Maths::piOver2);
+-	for (int i = 0; i < 20; i++)
+-	{
+-		
+-		PlaneActor* p = new PlaneActor();
+-		MeshComponent* mc = new MeshComponent(p);
+-		p->setPosition(Vector3((-200 + i * size), 200 - size, 0.0f));
+-		p->setRotation(q);
+-		p->setScale(50.f);
+-		mc->setVisible(false);
+-		
+-
+-		p = new PlaneActor();
+-		p->setPosition(Vector3((-200 + i * size), 200 + size, 0.0f));
+-		p->setRotation(q);
+-		p->setScale(50.f);
+-
+-		
+-	}
++	// Quaternion q = Quaternion(Vector3::unitX, Maths::piOver2);
++	// for (int i = 0; i < 10; i++)
++	// {
++	// 	
++	// 	PlaneActor* p = new PlaneActor();
++	// 	MeshComponent* mc = new MeshComponent(p);
++	// 	p->setPosition(Vector3((-200 + i * size), 200 - size, 0.0f));
++	// 	p->setRotation(q);
++	// 	p->setScale(50.f);
++	// 	mc->setVisible(false);
++	// 	
++	//
++	// 	p = new PlaneActor();
++	// 	p->setPosition(Vector3((-200 + i * size), 200 + size, 0.0f));
++	// 	p->setRotation(q);
++	// 	p->setScale(50.f);
++	//
++	// 	
++	// }
+ 
+ 	//q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
+ 	// Forward/back walls
+@@ -140,9 +140,9 @@
+ 	//ac->playEvent("event:/FireLoop");
+ 
+ 	// Corsshair
+-	Actor* crosshairActor = new Actor();
+-	crosshairActor->setScale(2.0f);
+-	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
++	// Actor* crosshairActor = new Actor();
++	// crosshairActor->setScale(2.0f);
++	// crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
+ 
+ 	// Start music
+ 	//musicEvent = audioSystem.playEvent("event:/Music");
