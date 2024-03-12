@@ -58,7 +58,7 @@ void Game::load()
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
 	
 	fps = new FPSActor();
-	fps->setPosition(Vector3(0.f,0.f,75.f));
+	fps->setPosition(Vector3(-50.f,37.f,75.f));
 	//follow->setScale(Vector3(0.2f,0.2f,0.2f));
 	//fps = new FPSActor();
 

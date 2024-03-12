@@ -68,46 +68,6 @@ void FPSActor::actorInput(const InputState& inputState)
 {
 	float forwardSpeed = 0.0f;
 	float strafeSpeed = 0.0f;
-	// wasd movement
-	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W))
-	{
-		forwardSpeed += 400.0f;
-	}
-	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S))
-	{
-		forwardSpeed -= 400.0f;
-	}
-	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A))
-	{
-		strafeSpeed -= 400.0f;
-	}
-	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_D))
-	{
-		strafeSpeed += 400.0f;
-	}
-	moveComponent->setForwardSpeed(forwardSpeed);
-	moveComponent->setStrafeSpeed(strafeSpeed);
-	// Mouse mouvement
-	Vector2 mousePosition = inputState.mouse.getPosition();
-	float x = mousePosition.x;
-	float y = mousePosition.y;
-	const int maxMouseSpeed = 500;
-	const float maxAngularSpeed = Maths::pi * 8;
-	float angularSpeed = 0.0f;
-	if (x != 0)
-	{
-		angularSpeed = x / maxMouseSpeed;
-		angularSpeed *= maxAngularSpeed;
-	}
-	moveComponent->setAngularSpeed(angularSpeed);
-	const float maxPitchSpeed = Maths::pi * 8;
-	float pitchSpeed = 0.0f;
-	if (y != 0)
-	{
-		pitchSpeed = y / maxMouseSpeed;
-		pitchSpeed *= maxPitchSpeed;
-	}
-	cameraComponent->setPitchSpeed(pitchSpeed);
 
 	// Shoot
 	if (inputState.mouse.getButtonState(1) == ButtonState::Pressed)
