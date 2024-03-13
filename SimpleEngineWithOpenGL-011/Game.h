@@ -38,7 +38,7 @@ public:
 
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
-	class CubeActor* getArrow() {return arrow; }
+	
 	RendererOGL& getRenderer() { return renderer; }
 	//AudioSystem& getAudioSystem() { return audioSystem; }
 	PhysicsSystem& getPhysicsSystem() { return physicsSystem; }
@@ -47,6 +47,7 @@ public:
 	void addPlane(class PlaneActor* plane);
 	void removePlane(class PlaneActor* plane);
 	vector<PlaneActor*>& getPlanes() { return planes; }
+	class CubeActor* getArrow() {return arrow; }
 
 
 private:
@@ -61,6 +62,7 @@ private:
 	PhysicsSystem physicsSystem;
 
 	bool isUpdatingActors;
+	bool directionSelected = false;
 	vector<Actor*> actors;
 	vector<Actor*> pendingActors;
 

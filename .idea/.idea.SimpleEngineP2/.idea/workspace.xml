@@ -11,8 +11,8 @@
     <list default="true" id="c7fba5a5-5c58-458f-9d0b-a93bf164e4bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BallActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BallActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BallMoveComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/BallMoveComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" afterDir="false" />
     </list>
@@ -58,29 +58,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ Project.SimpleEngineWithOpenGL-011.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "BowlingBase",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ Project.SimpleEngineWithOpenGL-011.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;BowlingBase&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\adupi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\adupi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\adupi\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\adupi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\adupi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\adupi\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.SimpleEngineWithOpenGL-011">
     <configuration name="SimpleEngineP2" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -201,7 +201,8 @@
       <workItem from="1710234582269" duration="4447000" />
       <workItem from="1710241361551" duration="636000" />
       <workItem from="1710250157859" duration="7286000" />
-      <workItem from="1710278184307" duration="2419000" />
+      <workItem from="1710278184307" duration="2556000" />
+      <workItem from="1710334932382" duration="4918000" />
     </task>
     <task id="LOCAL-00001" summary="[update] Modifie camera positio nand shooting systeme">
       <option name="closed" value="true" />

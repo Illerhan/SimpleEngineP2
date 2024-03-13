@@ -16,6 +16,10 @@ public:
 	void setVisible(bool isVisible);
 	void fixCollisions();
 
+	bool getDirSelected(){ return dirSelected;}
+	bool getPowerSelected(){ return powerSelected;}
+	bool getHasShoot(){ return hasShoot;}
+
 private:
 	class MoveComponent* moveComponent;
 	//class AudioComponent* audioComponent;
@@ -25,6 +29,10 @@ private:
 	//SoundEvent footstep;
 	float lastFootstep;
 	class BoxComponent* boxComponent;
+	bool dirSelected = false;
+	bool powerSelected = false;
+	bool hasShoot = false;
+
 };
 
 const Vector3 MODEL_OFFSET = Vector3(10.0f, 10.0f, -10.0f);

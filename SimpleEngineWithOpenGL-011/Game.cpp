@@ -62,11 +62,10 @@ void Game::load()
 	//follow->setScale(Vector3(0.2f,0.2f,0.2f));
 	//fps = new FPSActor();
 
-	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
-	//q = Quaternion::concatenate(q, Quaternion(Vector3::unitX, Maths::pi + Maths::pi / 4.0f));
+	
 	
 	// "Arrow"
-
+	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
 	arrow = new CubeActor();
 	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
 	arrow->setScale(Vector3(50.0f,10.0f,1.0));
@@ -291,28 +290,38 @@ void Game::loop()
 		update(dt);
 		render();
 		
-		if(scale <= 150 && positive)
-			scale += 50* dt;
-		if(scale <= 160 && !positive)
-		{
-			scale -= 50* dt;
-		}
-		if (scale >= 150)
-		{
-			positive = false;
-		}
-		if (scale <= 50)
-			positive = true;
+		
+		if(!fps->getDirSelected()){
+			if (arrow->getRotation().z >= -0.40 && arrow->getRotation().z <=-0.38)
+				rotateDire = Maths::piOver2/2*dt;
 
-		if (arrow->getRotation().z >= -0.40 && arrow->getRotation().z <=-0.38)
-			rotateDire = Maths::piOver2/2*dt;
+			if(arrow->getRotation().z >= 0.35)
+				rotateDire = -Maths::piOver2/2*dt;
+			std::cout << fps->getHasShoot();
+			arrow->rotate(Vector3::unitZ,rotateDire);
+		}
 
-		if(arrow->getRotation().z >= 0.35)
-			rotateDire = -Maths::piOver2/2*dt;
+		
+		if(fps->getDirSelected() && !fps->getPowerSelected()){
+			if(scale <= 150 && positive)
+				scale += 50* dt;
+			if(scale <= 160 && !positive)
+			{
+				scale -= 50* dt;
+			}
+			if (scale >= 150)
+			{
+				positive = false;
+			}
+			if (scale <= 50)
+				positive = true;
+			std::cout << fps->getPowerSelected();
+			arrow->setScale(Vector3(scale,10,1));
+		}
 		
 		
-		arrow->rotate(Vector3::unitZ,rotateDire);
-		arrow->setScale(Vector3(scale,10,1));
+		//arrow->rotate(Vector3::unitZ,rotateDire);
+		
 		
 		timer.delayTime();
 	}

@@ -72,11 +72,25 @@ void FPSActor::actorInput(const InputState& inputState)
 	float strafeSpeed = 0.0f;
 
 	// Shoot
-	if (inputState.mouse.getButtonState(1) == ButtonState::Pressed)
+	if (inputState.mouse.getButtonState(1) == ButtonState::Pressed && dirSelected && powerSelected && !hasShoot)
 	{
 		shoot();
+		hasShoot = true;
+		dirSelected = false;
+		powerSelected = false;
+	}
+	if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && dirSelected && !powerSelected)
+	{
+		powerSelected = true;
+	}
+	if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && !dirSelected &&  !hasShoot)
+	{
+		dirSelected = true;
 	}
 }
+	
+	
+	
 
 void FPSActor::shoot()
 {
