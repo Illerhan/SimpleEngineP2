@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <algorithm>
 
+#include "CubeMoveComponent.h"
 #include "FollowCameraComponent.h"
 
 using namespace std;
@@ -70,6 +71,7 @@ void Game::load()
 	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
 	arrow->setScale(Vector3(50.0f,10.0f,1.0));
 	arrow->setRotation(q);
+	arrow->setArrow(arrow);
 	
 	
 	// First line
@@ -81,7 +83,7 @@ void Game::load()
 	CubeActor* a2 = new CubeActor();
 	a2->setPosition(Vector3(700.0f, 50.0f, 15.0f));
 	a2->setScale(Vector3(10.0f,10.0f,30.0));
-
+	
 	CubeActor* a3 = new CubeActor();
 	a3->setPosition(Vector3(700.0f, 25.0f, 15.0f));
 	a3->setScale(Vector3(10.0f,10.0f,30.0));
@@ -89,7 +91,7 @@ void Game::load()
 	CubeActor* a4 = new CubeActor();
 	a4->setPosition(Vector3(700.0f, 0.0f, 15.0f));
 	a4->setScale(Vector3(10.0f,10.0f,30.0));
-
+	
 	// Second line
 
 	CubeActor* a5 = new CubeActor();
@@ -119,16 +121,6 @@ void Game::load()
 	CubeActor* a10 = new CubeActor();
 	a10->setPosition(Vector3(625.0f, 37.0f, 15.0f));
 	a10->setScale(Vector3(10.0f,10.0f,30.0));
-	
-	
-	
-	// a->setRotation(q);
-
-	// SphereActor* b = new SphereActor();
-	// b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	// b->setScale(3.0f);
-
-	// Floor and walls
 
 	// Setup floor
 	const float start = 0.0f;
@@ -143,66 +135,15 @@ void Game::load()
 		}
 	}
 	
-
-	// // Left/right walls
-	// q = Quaternion(Vector3::unitX, Maths::piOver2);
-	// for (int i = 0; i < 10; i++)
-	// {
-	// 	PlaneActor* p = new PlaneActor();
-	// 	p->setPosition(Vector3(start + i * size, start - size, 0.0f));
-	// 	p->setRotation(q);
-	//
-	// 	p = new PlaneActor();
-	// 	p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
-	// 	p->setRotation(q);
-	// }
-
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
-	// Forward/back walls
-	// for (int i = 0; i < 10; i++)
-	// {
-	// 	PlaneActor* p = new PlaneActor();
-	// 	p->setPosition(Vector3(start - size, start + i * size, 0.0f));
-	// 	p->setRotation(q);
-	//
-	// 	p = new PlaneActor();
-	// 	p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
-	// 	p->setRotation(q);
-	// }
-
+	
 	// Setup lights
 	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
 	DirectionalLight& dir = renderer.getDirectionalLight();
 	dir.direction = Vector3(0.0f, -0.707f, -0.707f);
 	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
-
-	// Create spheres with audio components playing different sounds
-	//SphereActor* soundSphere = new SphereActor();
-	//soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
-	//soundSphere->setScale(1.0f);
-	//AudioComponent* ac = new AudioComponent(soundSphere);
-	//ac->playEvent("event:/FireLoop");
-
-	// Corsshair
-	// Actor* crosshairActor = new Actor();
-	// crosshairActor->setScale(2.0f);
-	// crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
-
-	// Start music
-	//musicEvent = audioSystem.playEvent("event:/Music");
-
-	// TargetActor* t = new TargetActor();
-	// t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
-	// t = new TargetActor();
-	// t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
-	// t = new TargetActor();
-	// t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
-	// t = new TargetActor();
-	// t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
 }
-
-
 void Game::processInput()
 {
 	inputSystem.preUpdate();
@@ -283,6 +224,7 @@ void Game::loop()
 	float scale = 50;
 	bool positive = true;
 	float rotateDire = Maths::piOver2/2*dt;
+	arrow->cubeMove->getArrow()->removeComponent(arrow->cubeMove);
 	while (isRunning)
 	{
 		float dt = timer.computeDeltaTime() / 1000.0f;
@@ -297,7 +239,6 @@ void Game::loop()
 
 			if(arrow->getRotation().z >= 0.35)
 				rotateDire = -Maths::piOver2/2*dt;
-			std::cout << fps->getHasShoot();
 			arrow->rotate(Vector3::unitZ,rotateDire);
 		}
 
@@ -315,7 +256,6 @@ void Game::loop()
 			}
 			if (scale <= 50)
 				positive = true;
-			std::cout << fps->getPowerSelected();
 			arrow->setScale(Vector3(scale,10,1));
 		}
 		

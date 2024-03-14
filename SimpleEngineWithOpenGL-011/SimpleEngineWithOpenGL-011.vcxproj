@@ -160,6 +160,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ControllerState.cpp" />
     <ClCompile Include="CubeActor.cpp" />
+    <ClCompile Include="CubeMoveComponent.cpp" />
     <ClCompile Include="FollowActor.cpp" />
     <ClCompile Include="FollowCameraComponent.cpp" />
     <ClCompile Include="FPSActor.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ControllerState.h" />
     <ClInclude Include="CubeActor.h" />
+    <ClInclude Include="CubeMoveComponent.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="FollowActor.h" />
     <ClInclude Include="FollowCameraComponent.h" />

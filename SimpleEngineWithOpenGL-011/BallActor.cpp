@@ -3,8 +3,10 @@
 #include "Assets.h"
 #include "AudioComponent.h"
 #include "BallMoveComponent.h"
+#include "BoxComponent.h"
 #include "CubeActor.h"
 #include "Game.h"
+
 
 BallActor::BallActor() : Actor(), lifetimeSpan(20.0f), /*audio(nullptr),*/ ballMove(nullptr)
 {
@@ -13,7 +15,8 @@ BallActor::BallActor() : Actor(), lifetimeSpan(20.0f), /*audio(nullptr),*/ ballM
 	//audio = new AudioComponent(this);
 	ballMove = new BallMoveComponent(this);
 	ballMove->setForwardSpeed(5*getGame().getArrow()->getScale().x);
-	std::cout << ballMove->getForwardSpeed() << "\n";
+	BoxComponent* bc = new BoxComponent(this);
+	bc->setObjectBox(Assets::getMesh("Mesh_Sphere").getBox());
 }
 
 void BallActor::updateActor(float dt)
@@ -40,7 +43,14 @@ void BallActor::setPlayer(Actor* player)
 	ballMove->setPlayer(player);
 }
 
-void BallActor::hitTarget()
+void BallActor::setArrow(Actor* arrow)
 {
-	//audio->playEvent("event:/Ding");
+	ballMove->setArrow(arrow);
+}
+
+void BallActor::hitTarget(CubeActor* target)
+{
+	if (target != nullptr)
+		target->rotateToNewForward(Vector3::unitX);
+
 }

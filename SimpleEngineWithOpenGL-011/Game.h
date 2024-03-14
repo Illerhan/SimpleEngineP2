@@ -48,6 +48,8 @@ public:
 	void removePlane(class PlaneActor* plane);
 	vector<PlaneActor*>& getPlanes() { return planes; }
 	class CubeActor* getArrow() {return arrow; }
+	void setScore(){score += 1;}
+	int getScore(){return score;}
 
 
 private:
@@ -74,5 +76,7 @@ private:
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
 	class Quaternion q();
+	int score;
+
 };
 
