@@ -15,6 +15,7 @@ public:
 	void setFootstepSurface(float value);
 	void setVisible(bool isVisible);
 	void fixCollisions();
+	void resetGame();
 
 	bool getDirSelected(){ return dirSelected;}
 	bool getPowerSelected(){ return powerSelected;}
@@ -32,6 +33,9 @@ private:
 	bool dirSelected = false;
 	bool powerSelected = false;
 	bool hasShoot = false;
+	float delay = 0;
+	bool canShoot = true;
+	int shootCount = 0;
 
 };
 

@@ -43,13 +43,24 @@ FPSActor::FPSActor() :
 void FPSActor::updateActor(float dt)
 {
 	Actor::updateActor(dt);
+	delay-=1*dt;
+
+	if (shootCount>=2 && delay <= 0)
+	{
+		getGame().deleteCubes(getGame().getCubes());
+		getGame().initiateGame();
+		shootCount=0;
+	}
+	if (delay >=0)
+	{
+		hasShoot = false;
+		getGame().getArrow()->setScale(Vector3(50.0f,10.0f,1.f));
+	}
 
 	// Play the footstep if we're moving and haven't recently
 	lastFootstep -= dt;
 	if (!Maths::nearZero(moveComponent->getForwardSpeed()) && lastFootstep <= 0.0f)
 	{
-		//footstep.setPaused(false);
-		//footstep.restart();
 		lastFootstep = 0.5f;
 	}
 
@@ -72,20 +83,25 @@ void FPSActor::actorInput(const InputState& inputState)
 	float strafeSpeed = 0.0f;
 
 	// Shoot
-	if (inputState.mouse.getButtonState(1) == ButtonState::Pressed && dirSelected && powerSelected && !hasShoot)
+	if (delay <=0 && shootCount < 2)
 	{
-		shoot();
-		hasShoot = true;
-		dirSelected = false;
-		powerSelected = false;
-	}
-	if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && dirSelected && !powerSelected)
-	{
-		powerSelected = true;
-	}
-	if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && !dirSelected &&  !hasShoot)
-	{
-		dirSelected = true;
+		if (inputState.mouse.getButtonState(1) == ButtonState::Pressed && dirSelected && powerSelected && !hasShoot)
+		{
+			shoot();
+			hasShoot = true;
+			dirSelected = false;
+			powerSelected = false;
+			shootCount++;
+			delay = 10;
+		}
+		if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && dirSelected && !powerSelected)
+		{
+			powerSelected = true;
+		}
+		if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && !dirSelected &&  !hasShoot)
+		{
+			dirSelected = true;
+		}
 	}
 }
 	
@@ -119,10 +135,6 @@ void FPSActor::shoot()
 
 void FPSActor::setFootstepSurface(float value)
 {
-	// Pause here because the way I setup the parameter in FMOD
-	// changing it will play a footstep
-	//footstep.setPaused(true);
-	//footstep.setParameter("Surface", value);
 }
 
 void FPSActor::setVisible(bool isVisible)

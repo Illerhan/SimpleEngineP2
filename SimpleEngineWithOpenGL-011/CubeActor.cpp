@@ -7,10 +7,10 @@
 #include "Game.h"
 #include "MoveComponent.h"
 
-CubeActor::CubeActor(): lifetimeSpan(10.f)
+CubeActor::CubeActor():  meshName("Mesh_Cube10")
 {
 	MeshComponent* mc = new MeshComponent(this);
-	mc->setMesh(Assets::getMesh("Mesh_Cube"));
+	mc->setMesh(Assets::getMesh("Mesh_Cube10"));
 	BoxComponent* bc = new BoxComponent(this);
 	bc->setObjectBox(Assets::getMesh("Mesh_Cube").getBox());
 	cubeMove = new CubeMoveComponent(this);

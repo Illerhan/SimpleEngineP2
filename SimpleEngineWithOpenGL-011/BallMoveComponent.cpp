@@ -38,10 +38,6 @@ void BallMoveComponent::update(float dt)
 	// (Don't collide vs player)
 	if (owner.getGame().getPhysicsSystem().segmentCast(l, info) && info.actor != player && info.actor != arrow)
 	{
-		// If we collided, reflect the ball about the normal
-		//dir = Vector3::reflect(dir, info.normal);
-		//owner.rotateToNewForward(dir);
-		// Did we hit a target?
 		CubeActor* target = dynamic_cast<CubeActor*>(info.actor);
 		if (target && target !=arrow)
 		{

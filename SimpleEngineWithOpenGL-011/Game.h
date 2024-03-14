@@ -9,6 +9,7 @@
 #include "InputSystem.h"
 #include "PhysicsSystem.h"
 #include "PlaneActor.h"
+#include "CubeActor.h"
 
 using std::vector;
 
@@ -45,7 +46,11 @@ public:
 
 	// Game-specific
 	void addPlane(class PlaneActor* plane);
+	void addCubes(CubeActor* cube);
 	void removePlane(class PlaneActor* plane);
+	void initiateGame();
+	void deleteCubes(vector<CubeActor*>& cubes);
+	vector<CubeActor*>& getCubes() {return cubes;}
 	vector<PlaneActor*>& getPlanes() { return planes; }
 	class CubeActor* getArrow() {return arrow; }
 	void setScore(){score += 1;}
@@ -75,6 +80,7 @@ private:
 	class CubeActor* arrow;
 	class SpriteComponent* crosshair;
 	vector<PlaneActor*> planes;
+	vector<CubeActor*> cubes;
 	class Quaternion q();
 	int score;
 
