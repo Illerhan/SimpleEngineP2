@@ -8,15 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7fba5a5-5c58-458f-9d0b-a93bf164e4bb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleEngineP2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Assets.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Assets.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CubeActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CubeActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CubeActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/CubeActor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/FPSActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleEngineWithOpenGL-011/Game.h" afterDir="false" />
-    </list>
+    <list default="true" id="c7fba5a5-5c58-458f-9d0b-a93bf164e4bb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -218,7 +210,7 @@
       <workItem from="1710334932382" duration="6479000" />
       <workItem from="1710421325948" duration="28630000" />
       <workItem from="1710496907863" duration="4521000" />
-      <workItem from="1710506046360" duration="10718000" />
+      <workItem from="1710506046360" duration="10961000" />
     </task>
     <task id="LOCAL-00001" summary="[update] Modifie camera positio nand shooting systeme">
       <option name="closed" value="true" />
