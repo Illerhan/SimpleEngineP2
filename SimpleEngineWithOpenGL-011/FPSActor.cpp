@@ -45,16 +45,25 @@ void FPSActor::updateActor(float dt)
 	Actor::updateActor(dt);
 	delay-=1*dt;
 
+	if(shootCount == 2 && delay <= 2)
+	{
+		CubeActor* scoring = new CubeActor(std::to_string(getGame().getScore()));
+		scoring->setScale(Vector3(0.5,0.5,1));
+		getGame().addCubes(scoring);
+	}
+	
+	
 	if (shootCount>=2 && delay <= 0)
 	{
 		getGame().deleteCubes(getGame().getCubes());
 		getGame().initiateGame();
 		shootCount=0;
+		getGame().setScore(0);
 	}
-	if (delay >=0)
+	if (delay <=0 && hasShoot)
 	{
 		hasShoot = false;
-		getGame().getArrow()->setScale(Vector3(50.0f,10.0f,1.f));
+		
 	}
 
 	// Play the footstep if we're moving and haven't recently
@@ -88,13 +97,14 @@ void FPSActor::actorInput(const InputState& inputState)
 		if (inputState.mouse.getButtonState(1) == ButtonState::Pressed && dirSelected && powerSelected && !hasShoot)
 		{
 			shoot();
+			getGame().getArrow()->setScale(Vector3(50.0f,10.0f,1.f));
 			hasShoot = true;
 			dirSelected = false;
 			powerSelected = false;
 			shootCount++;
-			delay = 10;
+			delay =7;
 		}
-		if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && dirSelected && !powerSelected)
+		if (inputState.mouse.getButtonState(1)== ButtonState::Pressed && dirSelected && !powerSelected &&  !hasShoot)
 		{
 			powerSelected = true;
 		}

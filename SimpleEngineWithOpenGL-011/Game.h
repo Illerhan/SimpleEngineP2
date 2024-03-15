@@ -54,6 +54,7 @@ public:
 	vector<PlaneActor*>& getPlanes() { return planes; }
 	class CubeActor* getArrow() {return arrow; }
 	void setScore(){score += 1;}
+	void setScore(int scoreP){score = scoreP;}
 	int getScore(){return score;}
 
 

@@ -17,7 +17,6 @@
 #include <algorithm>
 
 #include "CubeMoveComponent.h"
-#include "FollowCameraComponent.h"
 
 using namespace std;
 
@@ -65,23 +64,25 @@ void Game::load()
 	
 	
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube0");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube1");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube2");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube3");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube4");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube5");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube6");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube7");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube8");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube9");
-	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube10");
+	Assets::loadMesh("Res\\Meshes\\Cube0.gpmesh", "Mesh_Cube0");
+	Assets::loadMesh("Res\\Meshes\\Cube1.gpmesh", "Mesh_Cube1");
+	Assets::loadMesh("Res\\Meshes\\Cube2.gpmesh", "Mesh_Cube2");
+	Assets::loadMesh("Res\\Meshes\\Cube3.gpmesh", "Mesh_Cube3");
+	Assets::loadMesh("Res\\Meshes\\Cube4.gpmesh", "Mesh_Cube4");
+	Assets::loadMesh("Res\\Meshes\\Cube5.gpmesh", "Mesh_Cube5");
+	Assets::loadMesh("Res\\Meshes\\Cube6.gpmesh", "Mesh_Cube6");
+	Assets::loadMesh("Res\\Meshes\\Cube7.gpmesh", "Mesh_Cube7");
+	Assets::loadMesh("Res\\Meshes\\Cube8.gpmesh", "Mesh_Cube8");
+	Assets::loadMesh("Res\\Meshes\\Cube9.gpmesh", "Mesh_Cube9");
+	Assets::loadMesh("Res\\Meshes\\Cube10.gpmesh", "Mesh_Cube10");
 
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
 	Assets::loadMesh("Res\\Meshes\\Rifle.gpmesh", "Mesh_Rifle");
 	Assets::loadMesh("Res\\Meshes\\RacingCar.gpmesh", "Mesh_RacingCar");
 	Assets::loadMesh("Res\\Meshes\\Target.gpmesh", "Mesh_Target");
+
+	
 	
 	fps = new FPSActor();
 	fps->setPosition(Vector3(-50.f,37.f,35.f));
@@ -217,9 +218,9 @@ void Game::loop()
 				rotateDire = -Maths::piOver2/2*dt;
 			arrow->rotate(Vector3::unitZ,rotateDire);
 		}
-
 		
 		if(fps->getDirSelected() && !fps->getPowerSelected()){
+			std::cout << "Hello" << "\n";
 			if(scale <= 150 && positive)
 				scale += 50* dt;
 			if(scale <= 160 && !positive)
@@ -232,10 +233,8 @@ void Game::loop()
 			}
 			if (scale <= 50)
 				positive = true;
-
 			arrow->setScale(Vector3(scale,10,1));
 		}
-		
 		timer.delayTime();
 	}
 }
@@ -319,9 +318,7 @@ void Game::deleteCubes(vector<CubeActor*>& cubes)
 
 void Game::initiateGame()
 {
-	
 	// Arrow
-	
 	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
 	arrow = new CubeActor();
 	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
@@ -329,10 +326,6 @@ void Game::initiateGame()
 	arrow->setRotation(q);
 	arrow->setArrow(arrow);
 	addCubes(arrow);
-	arrow->setMeshName("Mesh_Cube10");
-
-	CubeActor* c10 = new CubeActor();
-	c10->setMeshName("Mesh_Cube10");
 	
 	// First line
 	CubeActor* a1 = new CubeActor();

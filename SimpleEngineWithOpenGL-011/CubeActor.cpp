@@ -7,19 +7,31 @@
 #include "Game.h"
 #include "MoveComponent.h"
 
-CubeActor::CubeActor():  meshName("Mesh_Cube10")
+CubeActor::CubeActor()
 {
 	MeshComponent* mc = new MeshComponent(this);
-	mc->setMesh(Assets::getMesh("Mesh_Cube10"));
+	mc->setMesh(Assets::getMesh("Mesh_Cube"));
+	//SpriteComponent* sp = new SpriteComponent(this,Assets::getTexture("10"));
+	//sp->setVisible(true);
 	BoxComponent* bc = new BoxComponent(this);
 	bc->setObjectBox(Assets::getMesh("Mesh_Cube").getBox());
+	cubeMove = new CubeMoveComponent(this);
+}
+
+CubeActor::CubeActor(std::string spriteNameP):  spriteName(spriteNameP)
+{
+	MeshComponent* mc = new MeshComponent(this);
+	mc->setMesh(Assets::getMesh("Mesh_Cube"));
+	SpriteComponent* sp = new SpriteComponent(this,Assets::getTexture(spriteName));
+	sp->setVisible(true);
 	cubeMove = new CubeMoveComponent(this);
 }
 
 void CubeActor::updateActor(float dt)
 {
 	Actor::updateActor(dt);
-	if (gotHit)  lifetimeSpan-=1;
+	if (gotHit)
+		lifetimeSpan-=1*dt;
 	if (lifetimeSpan < 0.0f || cubeMove->getOwner().getPosition().x >= 1000)
 	{
 		getGame().setScore();
@@ -31,6 +43,7 @@ void CubeActor::hitBall(BallActor* ball)
 {
 	if (ball != nullptr){
 		gotHit = true;
+		lifetimeSpan = 2.0;
 	}
 }
 void CubeActor::hitPins(CubeActor* pins)
