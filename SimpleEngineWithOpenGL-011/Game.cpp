@@ -93,8 +93,14 @@ void Game::load()
 	
 	// "Arrow"
 
+	// Arrow
+	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
+	arrow = new CubeActor();
+	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
+	arrow->setScale(Vector3(50.0f,10.0f,1.0));
+	arrow->setRotation(q);
+	arrow->setArrow(arrow);
 	
-
 	initiateGame();
 	
 	
@@ -220,7 +226,6 @@ void Game::loop()
 		}
 		
 		if(fps->getDirSelected() && !fps->getPowerSelected()){
-			std::cout << "Hello" << "\n";
 			if(scale <= 150 && positive)
 				scale += 50* dt;
 			if(scale <= 160 && !positive)
@@ -318,15 +323,7 @@ void Game::deleteCubes(vector<CubeActor*>& cubes)
 
 void Game::initiateGame()
 {
-	// Arrow
-	Quaternion q(Vector3::unitZ, -Maths::piOver2/2);
-	arrow = new CubeActor();
-	arrow->setPosition(Vector3(-30, 37.f, 2.0f));
-	arrow->setScale(Vector3(50.0f,10.0f,1.0));
-	arrow->setRotation(q);
-	arrow->setArrow(arrow);
-	addCubes(arrow);
-	
+
 	// First line
 	CubeActor* a1 = new CubeActor();
 	a1->setPosition(Vector3(700.0f, 75.0f, 15.0f));
