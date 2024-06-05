@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <algorithm>
+#include <sstream>
 
 #include "Actor.h"
 #include "Timer.h"
@@ -26,6 +27,29 @@ bool Game::initialize()
 	bool isFontInit = Font::initialize();
 
 	return isWindowInit && isRendererInit && isInputInit && isFontInit; // Return bool && bool && bool ...to detect error
+}
+
+std::vector<std::vector<int>> Game::loadLevel(const std::string& filename) {
+	std::ifstream file(filename);
+	std::vector<std::vector<int>> level;
+	std::string line;
+
+	if (!file.is_open()) {
+		std::cerr << "Failed to open level file." << std::endl;
+		return level;
+	}
+
+	while (std::getline(file, line)) {
+		std::vector<int> row;
+		std::istringstream iss(line);
+		int value;
+		while (iss >> value) {
+			row.push_back(value);
+		}
+		level.push_back(row);
+	}
+
+	return level;
 }
 
 void Game::load()
@@ -67,55 +91,75 @@ void Game::load()
 
 
 	fps = new FPSActor();
+	fps->setPosition(Vector3(0,0,500.f));
+	
+	// Load the level data from the file
+	std::vector<std::vector<int>> level = loadLevel("level.txt");
 
+	// Iterate through the level data and create CubeActors where needed
+	const float cubeSize = 500.0f; // Example size for each cube
+	const float startX = -5000.f; // Starting position for the level
+	const float startY = -5000.f;
+
+	for (size_t y = 0; y < level.size(); ++y) {
+		for (size_t x = 0; x < level[y].size(); ++x) {
+			if (level[y][x] == 1) {
+				CubeActor* cube = new CubeActor();
+				cube->setPosition(Vector3(startX + x * cubeSize, startY + y * cubeSize, 0.0f));
+				cube->setScale(cubeSize);
+			} else if (level[y][x] == 2) {
+				fps->setPosition(Vector3(x,y,500.f));
+			} else if (level[y][x] == 3) {
+				// Handle level end if needed
+			}
+		}
+	}
+	
 	CubeActor* a = new CubeActor();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
 	a->setScale(100.0f);
+	
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
 
-	SphereActor* b = new SphereActor();
-	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
-	b->setScale(3.0f);
-
 	// Floor and walls
 
 	// Setup floor
-	const float start = -1250.0f;
-	const float size = 250.0f;
-	for (int i = 0; i < 10; i++)
+	const float start = -5000.f;
+	const float size = 550.f;
+	for (int i = 0; i < 20; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j <19; j++)
 		{
 			PlaneActor* p = new PlaneActor();
 			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
 		}
 	}
 
-	// Left/right walls
+	//Left/right walls
 	q = Quaternion(Vector3::unitX, Maths::piOver2);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		PlaneActor* p = new PlaneActor();
-		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
+		p->setPosition(Vector3(start + i * size, start - size+50, 0.0f));
 		p->setRotation(q);
-
+	
 		p = new PlaneActor();
-		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
+		p->setPosition(Vector3(start + i * size, -start + size-150, 0.0f));
 		p->setRotation(q);
 	}
-
+	
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
 	// Forward/back walls
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		PlaneActor* p = new PlaneActor();
-		p->setPosition(Vector3(start - size, start + i * size, 0.0f));
+		p->setPosition(Vector3(start - size+50, start + i * size, 0.0f));
 		p->setRotation(q);
-
+	
 		p = new PlaneActor();
-		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
+		p->setPosition(Vector3(-start + size+250, start + i * size, 0.0f));
 		p->setRotation(q);
 	}
 

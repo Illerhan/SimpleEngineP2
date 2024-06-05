@@ -36,6 +36,7 @@ private:
 
 public:
 	bool initialize();
+	std::vector<std::vector<int>> loadLevel(const std::string& filename);
 	void load();
 	void loop();
 	void unload();

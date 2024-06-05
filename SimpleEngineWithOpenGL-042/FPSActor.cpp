@@ -65,19 +65,19 @@ void FPSActor::actorInput(const InputState& inputState)
 	// wasd movement
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W))
 	{
-		forwardSpeed += 400.0f;
+		forwardSpeed += 1000.0f;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S))
 	{
-		forwardSpeed -= 400.0f;
+		forwardSpeed -= 1000.0f;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A))
 	{
-		strafeSpeed -= 400.0f;
+		strafeSpeed -= 1000.0f;
 	}
 	if (inputState.keyboard.getKeyValue(SDL_SCANCODE_D))
 	{
-		strafeSpeed += 400.0f;
+		strafeSpeed += 1000.0f;
 	}
 	moveComponent->setForwardSpeed(forwardSpeed);
 	moveComponent->setStrafeSpeed(strafeSpeed);

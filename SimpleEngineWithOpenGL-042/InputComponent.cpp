@@ -4,7 +4,7 @@
 
 InputComponent::InputComponent(Actor* ownerP) :
 	MoveComponent(ownerP),
-	maxForwardSpeed(100.0f),
+	maxForwardSpeed(1000.0f),
 	maxAngularSpeed(1.0f),
 	forwardKey(SDL_SCANCODE_W),
 	backKey(SDL_SCANCODE_S),
