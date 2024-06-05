@@ -1,4 +1,5 @@
 #pragma once
+#include "AABB.h"
 #include "Actor.h"
 #include "Vector3.h"
 
@@ -6,7 +7,8 @@ class FPSActor : public Actor
 {
 public:
 	FPSActor();
-	
+	void resolveCollision(const AABB& playerBox, const AABB& otherBox, Vector3& pos);
+
 	void updateActor(float dt) override;
 	void actorInput(const struct InputState& inputState) override;
 	void shoot();

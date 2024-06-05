@@ -34,6 +34,32 @@ FPSActor::FPSActor() :
 	boxComponent->setShouldRotate(false);
 }
 
+void FPSActor::resolveCollision(const AABB& playerBox, const AABB& otherBox, Vector3& pos) {
+	// Calculate all our differences
+	float dx1 = otherBox.max.x - playerBox.min.x;
+	float dx2 = otherBox.min.x - playerBox.max.x;
+	float dy1 = otherBox.max.y - playerBox.min.y;
+	float dy2 = otherBox.min.y - playerBox.max.y;
+	float dz1 = otherBox.max.z - playerBox.min.z;
+	float dz2 = otherBox.min.z - playerBox.max.z;
+
+	// Set dx to whichever of dx1/dx2 have a lower abs
+	float dx = Maths::abs(dx1) < Maths::abs(dx2) ? dx1 : dx2;
+	// Ditto for dy
+	float dy = Maths::abs(dy1) < Maths::abs(dy2) ? dy1 : dy2;
+	// Ditto for dz
+	float dz = Maths::abs(dz1) < Maths::abs(dz2) ? dz1 : dz2;
+
+	// Whichever is closest, adjust x/y position
+	if (Maths::abs(dx) <= Maths::abs(dy) && Maths::abs(dx) <= Maths::abs(dz)) {
+		pos.x += dx;
+	} else if (Maths::abs(dy) <= Maths::abs(dx) && Maths::abs(dy) <= Maths::abs(dz)) {
+		pos.y += dy;
+	} else {
+		pos.z += dz;
+	}
+}
+
 void FPSActor::updateActor(float dt)
 {
 	Actor::updateActor(dt);
@@ -142,53 +168,34 @@ void FPSActor::setVisible(bool isVisible)
 	meshComponent->setVisible(isVisible);
 }
 
-void FPSActor::fixCollisions()
-{
+void FPSActor::fixCollisions() {
 	// Need to recompute world transform to update world box
 	computeWorldTransform();
 
 	const AABB& playerBox = boxComponent->getWorldBox();
 	Vector3 pos = getPosition();
 
+	// Check collisions with planes
 	auto& planes = getGame().getPlanes();
-	for (auto pa : planes)
-	{
-		// Do we collide with this PlaneActor?
+	for (auto pa : planes) {
 		const AABB& planeBox = pa->getBox()->getWorldBox();
-		if (Collisions::intersect(playerBox, planeBox))
-		{
-			// Calculate all our differences
-			float dx1 = planeBox.max.x - playerBox.min.x;
-			float dx2 = planeBox.min.x - playerBox.max.x;
-			float dy1 = planeBox.max.y - playerBox.min.y;
-			float dy2 = planeBox.min.y - playerBox.max.y;
-			float dz1 = planeBox.max.z - playerBox.min.z;
-			float dz2 = planeBox.min.z - playerBox.max.z;
-
-			// Set dx to whichever of dx1/dx2 have a lower abs
-			float dx = Maths::abs(dx1) < Maths::abs(dx2) ? dx1 : dx2;
-			// Ditto for dy
-			float dy = Maths::abs(dy1) < Maths::abs(dy2) ? dy1 : dy2;
-			// Ditto for dz
-			float dz = Maths::abs(dz1) < Maths::abs(dz2) ? dz1 : dz2;
-
-			// Whichever is closest, adjust x/y position
-			if (Maths::abs(dx) <= Maths::abs(dy) && Maths::abs(dx) <= Maths::abs(dz))
-			{
-				pos.x += dx;
-			}
-			else if (Maths::abs(dy) <= Maths::abs(dx) && Maths::abs(dy) <= Maths::abs(dz))
-			{
-				pos.y += dy;
-			}
-			else
-			{
-				pos.z += dz;
-			}
-
-			// Need to set position and update box component
-			setPosition(pos);
-			boxComponent->onUpdateWorldTransform();
+		if (Collisions::intersect(playerBox, planeBox)) {
+			std::cout << "Collide" << std::endl;
+			resolveCollision(playerBox, planeBox, pos);
 		}
 	}
+
+	// Check collisions with cubes
+	const auto& cubes = getGame().getCubes();
+	for (const auto& cube : cubes) {
+		const AABB& cubeBox = cube->getBox()->getWorldBox();
+		if (Collisions::intersect(playerBox, cubeBox)) {
+			std::cout << "Collide" << std::endl;
+			resolveCollision(playerBox, cubeBox, pos);
+		}
+	}
+
+	// Update position and box component
+	setPosition(pos);
+	boxComponent->onUpdateWorldTransform();
 }

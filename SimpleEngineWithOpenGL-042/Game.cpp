@@ -10,11 +10,7 @@
 #include "CubeActor.h"
 #include "SphereActor.h"
 #include "PlaneActor.h"
-
 #include "FPSActor.h"
-#include "FollowActor.h"
-#include "OrbitActor.h"
-#include "SplineActor.h"
 #include "TargetActor.h"
 #include "PauseScreen.h"
 
@@ -91,14 +87,14 @@ void Game::load()
 
 
 	fps = new FPSActor();
-	//fps->setPosition(Vector3(0,0,500.f));
+	fps->setPosition(Vector3(0,0,100.f));
 	
 	// Load the level data from the file
 	std::vector<std::vector<int>> level = loadLevel("level.txt");
 	std::vector<std::vector<int>> level2 = loadLevel("level2.txt");
 
 	// Iterate through the level data and create CubeActors where needed
-	const Vector3 cubeSize = Vector3(500.0f,500.f,1000.f); // Example size for each cube
+	const Vector3 cubeSize = Vector3(500.0f,500.f,550.f); // Example size for each cube
 	const float startX = -5000.f; // Starting position for the level
 	const float startY = -5000.f;
 
@@ -108,9 +104,11 @@ void Game::load()
 				CubeActor* cube = new CubeActor();
 				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
 				cube->setScale(cubeSize);
+				AABB cubeColl(Vector3(startX + x-0.5,startY + y  -0.5f,0),Vector3(startX+ x+ 0.5f, startY + y  + 0.5f, 0));
+				cubes.push_back(cubeColl);
 			} else if (level[y][x] == 2) {
 				std::cout << y << x << std::endl;
-				fps->setPosition(Vector3(x,y,650.f));
+				//fps->setPosition(Vector3(x,y,650.f));
 			} else if (level[y][x] == 3) {
 				// Handle level end if needed
 			}
@@ -444,4 +442,15 @@ void Game::removePlane(PlaneActor* plane)
 {
 	auto iter = std::find(begin(planes), end(planes), plane);
 	planes.erase(iter);
+}
+
+void Game::addCubes(CubeActor* cube)
+{
+	Ccubes.emplace_back(cube);
+}
+
+void Game::removeCube(CubeActor* cube)
+{
+	auto iter = std::find(begin(Ccubes), end(Ccubes), cube);
+	Ccubes.erase(iter);
 }
