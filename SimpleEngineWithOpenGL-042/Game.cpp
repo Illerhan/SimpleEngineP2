@@ -91,13 +91,14 @@ void Game::load()
 
 
 	fps = new FPSActor();
-	fps->setPosition(Vector3(0,0,500.f));
+	//fps->setPosition(Vector3(0,0,500.f));
 	
 	// Load the level data from the file
 	std::vector<std::vector<int>> level = loadLevel("level.txt");
+	std::vector<std::vector<int>> level2 = loadLevel("level2.txt");
 
 	// Iterate through the level data and create CubeActors where needed
-	const float cubeSize = 500.0f; // Example size for each cube
+	const Vector3 cubeSize = Vector3(500.0f,500.f,1000.f); // Example size for each cube
 	const float startX = -5000.f; // Starting position for the level
 	const float startY = -5000.f;
 
@@ -105,11 +106,27 @@ void Game::load()
 		for (size_t x = 0; x < level[y].size(); ++x) {
 			if (level[y][x] == 1) {
 				CubeActor* cube = new CubeActor();
-				cube->setPosition(Vector3(startX + x * cubeSize, startY + y * cubeSize, 0.0f));
+				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
 				cube->setScale(cubeSize);
 			} else if (level[y][x] == 2) {
-				fps->setPosition(Vector3(x,y,500.f));
+				std::cout << y << x << std::endl;
+				fps->setPosition(Vector3(x,y,650.f));
 			} else if (level[y][x] == 3) {
+				// Handle level end if needed
+			}
+		}
+	}
+
+	for (size_t y = 0; y < level2.size(); ++y) {
+		for (size_t x = 0; x < level2[y].size(); ++x) {
+			if (level2[y][x] == 1) {
+				CubeActor* cube = new CubeActor();
+				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 550));
+				cube->setScale(cubeSize);
+			} else if (level2[y][x] == 2) {
+				std::cout << y << x << std::endl;
+				//fps->setPosition(Vector3(x,y,75.f));
+			} else if (level2[y][x] == 3) {
 				// Handle level end if needed
 			}
 		}
@@ -117,7 +134,7 @@ void Game::load()
 	
 	CubeActor* a = new CubeActor();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
-	a->setScale(100.0f);
+	a->setScale(Vector3(100.0f,100.0f,100.0f));
 	
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
@@ -125,7 +142,7 @@ void Game::load()
 
 	// Floor and walls
 
-	// Setup floor
+	// Setup floor 1
 	const float start = -5000.f;
 	const float size = 550.f;
 	for (int i = 0; i < 20; i++)
@@ -137,7 +154,44 @@ void Game::load()
 		}
 	}
 
+	// Setup floor 2
+
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j <19; j++)
+		{
+			PlaneActor* p = new PlaneActor();
+			p->setPosition(Vector3(start + i * size, start + j * size, 550.0f));
+		}
+	}
+
 	//Left/right walls
+	q = Quaternion(Vector3::unitX, Maths::piOver2);
+	for (int i = 0; i < 20; i++)
+	{
+		PlaneActor* p = new PlaneActor();
+		p->setPosition(Vector3(start + i * size, start - size+50, 550.f));
+		p->setRotation(q);
+	
+		p = new PlaneActor();
+		p->setPosition(Vector3(start + i * size, -start + size-150, 550.f));
+		p->setRotation(q);
+	}
+	
+	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
+	// Forward/back walls
+	for (int i = 0; i < 20; i++)
+	{
+		PlaneActor* p = new PlaneActor();
+		p->setPosition(Vector3(start - size+50, start + i * size, 550.f));
+		p->setRotation(q);
+	
+		p = new PlaneActor();
+		p->setPosition(Vector3(-start + size+250, start + i * size, 550.f));
+		p->setRotation(q);
+	}
+
+	//Left/right walls 2
 	q = Quaternion(Vector3::unitX, Maths::piOver2);
 	for (int i = 0; i < 20; i++)
 	{
@@ -151,7 +205,7 @@ void Game::load()
 	}
 	
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
-	// Forward/back walls
+	// Forward/back walls 2
 	for (int i = 0; i < 20; i++)
 	{
 		PlaneActor* p = new PlaneActor();
@@ -173,7 +227,7 @@ void Game::load()
 	// Create spheres with audio components playing different sounds
 	SphereActor* soundSphere = new SphereActor();
 	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
-	soundSphere->setScale(1.0f);
+	soundSphere->setScale(Vector3(1,1,1));
 
 
 	// HUD
