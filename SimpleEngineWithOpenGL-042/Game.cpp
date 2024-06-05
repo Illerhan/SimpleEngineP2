@@ -74,6 +74,7 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Blip.png", "Blip");
 	Assets::loadTexture(renderer, "Res\\Textures\\RadarArrow.png", "RadarArrow");
+	Assets::loadTexture(renderer, "Res\\Textures\\HitPoint.png", "HitPoint");
 
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
@@ -104,8 +105,8 @@ void Game::load()
 				CubeActor* cube = new CubeActor();
 				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
 				cube->setScale(cubeSize);
-				AABB cubeColl(Vector3(startX + x-0.5,startY + y  -0.5f,0),Vector3(startX+ x+ 0.5f, startY + y  + 0.5f, 0));
-				cubes.push_back(cubeColl);
+				//AABB cubeColl(Vector3(startX + x-0.5,startY + y  -0.5f,0),Vector3(startX+ x+ 0.5f, startY + y  + 0.5f, 0));
+				//cubes.push_back(cubeColl);
 			} else if (level[y][x] == 2) {
 				std::cout << y << x << std::endl;
 				//fps->setPosition(Vector3(x,y,650.f));
@@ -446,11 +447,11 @@ void Game::removePlane(PlaneActor* plane)
 
 void Game::addCubes(CubeActor* cube)
 {
-	Ccubes.emplace_back(cube);
+	cubes.emplace_back(cube);
 }
 
 void Game::removeCube(CubeActor* cube)
 {
-	auto iter = std::find(begin(Ccubes), end(Ccubes), cube);
-	Ccubes.erase(iter);
+	auto iter = std::find(begin(cubes), end(cubes), cube);
+	cubes.erase(iter);
 }

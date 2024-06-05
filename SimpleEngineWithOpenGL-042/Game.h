@@ -65,7 +65,7 @@ class Game
 		void addCubes(class CubeActor* cube);
 		void removeCube(class CubeActor* cube);
 		vector<PlaneActor*>& getPlanes() { return planes; }
-		vector<CubeActor*>& getCubes() { return Ccubes; }
+		vector<CubeActor*>& getCubes() { return cubes; }
 		class FPSActor* getPlayer() { return fps; }
 
 	private:
@@ -85,13 +85,12 @@ class Game
 		bool isUpdatingActors;
 		vector<Actor*> actors;
 		vector<Actor*> pendingActors;
-		std::vector<AABB> cubes;
-
+	
 		// Game specific
 
 		class FPSActor* fps;
 		class SpriteComponent* crosshair;
 		vector<PlaneActor*> planes;
-		vector<CubeActor*> Ccubes;
+		vector<CubeActor*> cubes;
 	};
 
