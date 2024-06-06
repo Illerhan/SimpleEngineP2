@@ -6,8 +6,10 @@ class HUDHitPoint : public UIScreen
 public:
     HUDHitPoint();
     ~HUDHitPoint();
+    void update(float dt) override;
 
     void draw(class Shader& shader) override;
+    void updateHP(float dt);
 
 protected:
     class Texture* hitPoint;

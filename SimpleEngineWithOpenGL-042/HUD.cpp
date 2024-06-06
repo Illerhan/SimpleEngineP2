@@ -15,7 +15,7 @@ HUD::HUD():
 	radar = &Assets::getTexture("Radar");
 	blipTex = &Assets::getTexture("Blip");
 	radarArrow = &Assets::getTexture("RadarArrow");
-
+	
 }
 
 HUD::~HUD()
@@ -27,7 +27,6 @@ void HUD::update(float dt)
 	UIScreen::update(dt);
 	updateCrosshair(dt);
 	updateRadar(dt);
-	updateHP(dt);
 }
 
 void HUD::draw(Shader& shader)
@@ -42,8 +41,6 @@ void HUD::draw(Shader& shader)
 		drawTexture(shader, blipTex, radarPosition + blip, 1.0f);
 	}
 	drawTexture(shader, radarArrow, radarPosition);
-	
-	
 }
 
 void HUD::drawHitPoints(Shader& shader, Texture* hitPoints)
@@ -129,10 +126,5 @@ void HUD::updateRadar(float dt)
 		}
 	}
 	
-}
-
-void HUD::updateHP(float dt)
-{
-
 }
 

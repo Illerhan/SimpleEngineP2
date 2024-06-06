@@ -32,6 +32,9 @@ protected:
 	vector<Vector2> blips;
 	float radarRange;
 	float radarRadius;
-	
+	Texture* hitPoint;
+	Texture* hitPoint2;
+	Texture* hitPoint3;
+	Texture* hitPoint4;
 };
 

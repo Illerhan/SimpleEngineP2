@@ -16,7 +16,8 @@ public:
 	void setFootstepSurface(float value);
 	void setVisible(bool isVisible);
 	void fixCollisions();
-	void setHP();
+	void loseHP();
+	void setHP(int sHP);
 	int getHP(){ return HP;}
 	int getMaxHP(){ return maxHP;}
 
@@ -30,6 +31,7 @@ private:
 	class BoxComponent* boxComponent;
 	int HP;
 	int maxHP;
+	bool finished = false;
 };
 
 const Vector3 MODEL_OFFSET = Vector3(10.0f, 10.0f, -10.0f);

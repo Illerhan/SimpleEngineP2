@@ -2,6 +2,9 @@
 #include "InputSystem.h"
 #include <SDL_scancode.h>
 
+#include "Game.h"
+
+
 InputComponent::InputComponent(Actor* ownerP) :
 	MoveComponent(ownerP),
 	maxForwardSpeed(1000.0f),
@@ -36,6 +39,7 @@ void InputComponent::processInput(const InputState& inputState)
 		angularSpeed += maxAngularSpeed;
 	}
 	setAngularSpeed(angularSpeed);
+
 }
 
 void InputComponent::setMaxForwardSpeed(float maxForwardSpeedP)

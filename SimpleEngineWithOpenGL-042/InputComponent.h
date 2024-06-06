@@ -1,5 +1,6 @@
 #pragma once
 #include "MoveComponent.h"
+
 #include <SDL_stdinc.h>
 #include <SDL_scancode.h>
 

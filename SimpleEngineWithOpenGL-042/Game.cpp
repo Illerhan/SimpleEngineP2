@@ -2,15 +2,20 @@
 
 #include <algorithm>
 #include <sstream>
+#include <valarray>
 
 #include "Actor.h"
 #include "Timer.h"
 #include "Assets.h"
 #include "MeshComponent.h"
 #include "CubeActor.h"
+#include "ElevatorActor.h"
+#include "ElevatorDoor.h"
+#include "EndPoint.h"
 #include "SphereActor.h"
 #include "PlaneActor.h"
 #include "FPSActor.h"
+#include "HUDHitPoint.h"
 #include "TargetActor.h"
 #include "PauseScreen.h"
 
@@ -74,7 +79,11 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Blip.png", "Blip");
 	Assets::loadTexture(renderer, "Res\\Textures\\RadarArrow.png", "RadarArrow");
-	Assets::loadTexture(renderer, "Res\\Textures\\HitPoint.png", "HitPoint");
+	Assets::loadTexture(renderer, "Res\\Textures\\HitPoint0.png", "HitPoint");
+	Assets::loadTexture(renderer, "Res\\Textures\\Hp3.png", "HitPoint2");
+	Assets::loadTexture(renderer, "Res\\Textures\\Hp2.png", "HitPoint3");
+	Assets::loadTexture(renderer, "Res\\Textures\\Hp1.png", "HitPoint4");
+	
 
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
@@ -88,14 +97,14 @@ void Game::load()
 
 
 	fps = new FPSActor();
-	fps->setPosition(Vector3(0,0,100.f));
+	//fps->setPosition(Vector3(0,0,100.f));
 	
 	// Load the level data from the file
 	std::vector<std::vector<int>> level = loadLevel("level.txt");
 	std::vector<std::vector<int>> level2 = loadLevel("level2.txt");
 
 	// Iterate through the level data and create CubeActors where needed
-	const Vector3 cubeSize = Vector3(500.0f,500.f,550.f); // Example size for each cube
+	const Vector3 cubeSize = Vector3(500.0f,500.f,600.f); // Example size for each cube
 	const float startX = -5000.f; // Starting position for the level
 	const float startY = -5000.f;
 
@@ -109,13 +118,23 @@ void Game::load()
 				//cubes.push_back(cubeColl);
 			} else if (level[y][x] == 2) {
 				std::cout << y << x << std::endl;
-				//fps->setPosition(Vector3(x,y,650.f));
+				fps->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y,100.0f));
 			} else if (level[y][x] == 3) {
-				// Handle level end if needed
+				endPoint = new EndPoint();
+				endPoint->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
+				endPoint->setScale(Vector3(1,1,1));
+			} else if (level[y][x] == 4) {
+				elevator = new ElevatorActor();
+				elevator->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
+				elevator->setScale(Vector3(1,1,1));
+				std::cout << elevator->getPosition().x << " : "<< elevator->getPosition().y << std::endl;
 			}
 		}
 	}
-
+	elevatorDoor = new ElevatorDoor();
+	elevatorDoor->rotateToNewForward(Vector3::negUnitZ);
+	elevatorDoor->setPosition(Vector3(2500,1000, 850.0f));
+	elevatorDoor->setScale(cubeSize);
 	for (size_t y = 0; y < level2.size(); ++y) {
 		for (size_t x = 0; x < level2[y].size(); ++x) {
 			if (level2[y][x] == 1) {
@@ -231,6 +250,7 @@ void Game::load()
 
 	// HUD
 	hud = new HUD();
+	hpHUD = new HUDHitPoint();
 	/*
 	Actor* crosshairActor = new Actor();
 	crosshairActor->setScale(2.0f);
@@ -293,7 +313,12 @@ void Game::processInput()
 void Game::update(float dt)
 {
 	// Update audio
-
+	// if((previousHP =! getPlayer()->getHP()))
+	// {
+	// 	previousHP = getPlayer()->getHP();
+	// 	hpHUD->close();
+	// }
+	
 	if (state == GameState::Gameplay)
 	{
 		// Update actors 
@@ -349,6 +374,8 @@ void Game::update(float dt)
 			++iter;
 		}
 	}
+
+	
 }
 
 void Game::render()

@@ -9,6 +9,7 @@
 #include "BallActor.h"
 #include "BoxComponent.h"
 #include "Collisions.h"
+#include "ElevatorDoor.h"
 
 FPSActor::FPSActor() : 
 	Actor(), 
@@ -17,7 +18,8 @@ FPSActor::FPSActor() :
 	meshComponent(nullptr),
 	cameraComponent(nullptr),
 	lastFootstep(0.0f),
-	boxComponent(nullptr)
+	boxComponent(nullptr),
+	HP(4)
 {
 	moveComponent = new MoveComponent(this);
 	cameraComponent = new FPSCameraComponent(this);
@@ -70,7 +72,7 @@ void FPSActor::updateActor(float dt)
 	{
 		lastFootstep = 0.5f;
 	}
-
+	
 	// Update position and rotation of model relatively to position
 	Vector3 modelPosition = getPosition();
 	modelPosition += getForward() * MODEL_OFFSET.x;
@@ -134,6 +136,13 @@ void FPSActor::actorInput(const InputState& inputState)
 	{
 		shoot();
 	}
+	if (inputState.keyboard.getKeyState(SDL_SCANCODE_L) == ButtonState::Pressed)
+	{
+		loseHP();
+		std::cout << HP << std::endl;
+	}
+
+	
 }
 
 void FPSActor::shoot()
@@ -195,7 +204,30 @@ void FPSActor::fixCollisions() {
 		}
 	}
 
+	const auto& end = getGame().getEnd();
+		const AABB& endBox = end->getBox()->getWorldBox();
+		if (Collisions::intersect(playerBox, endBox)) {
+			std::cout << "Collide with end gg !" << std::endl;
+			finished = true;
+		}
+
+	const auto& elevator = getGame().getElevator();
+	const AABB& elevatorBox = elevator->getBox()->getWorldBox();
+	if (Collisions::intersect(playerBox, elevatorBox)) {
+		getGame().getElevatorDoor()->getMove()->setForwardSpeed(500.f);
+	}
+
 	// Update position and box component
 	setPosition(pos);
 	boxComponent->onUpdateWorldTransform();
+}
+
+void FPSActor::loseHP()
+{
+	setHP(HP-=1);
+}
+
+void FPSActor::setHP(int sHP)
+{
+	HP = sHP;
 }

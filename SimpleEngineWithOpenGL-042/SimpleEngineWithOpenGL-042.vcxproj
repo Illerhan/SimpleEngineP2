@@ -157,6 +157,9 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="ElevatorActor.cpp" />
+    <ClCompile Include="ElevatorDoor.cpp" />
+    <ClCompile Include="EndPoint.cpp" />
     <ClCompile Include="FollowActor.cpp" />
     <ClCompile Include="FollowCameraComponent.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="HUDHitPoint.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="KeyActor.cpp" />
     <ClCompile Include="KeyboardState.cpp" />
     <ClCompile Include="LineSegment.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -221,6 +225,9 @@
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="ElevatorActor.h" />
+    <ClInclude Include="ElevatorDoor.h" />
+    <ClInclude Include="EndPoint.h" />
     <ClInclude Include="FollowActor.h" />
     <ClInclude Include="FollowCameraComponent.h" />
     <ClInclude Include="Font.h" />
@@ -237,6 +244,7 @@
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IRenderer.h" />
+    <ClInclude Include="KeyActor.h" />
     <ClInclude Include="KeyboardState.h" />
     <ClInclude Include="LineSegment.h" />
     <ClInclude Include="Log.h" />

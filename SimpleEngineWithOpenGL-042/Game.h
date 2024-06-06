@@ -1,9 +1,12 @@
 #pragma once
+#include <valarray>
 #include <vector>
 
 #include "AABB.h"
 #include "Actor.h"
 #include "CubeActor.h"
+#include "ElevatorActor.h"
+#include "EndPoint.h"
 #include "SpriteComponent.h"
 #include "Window.h"
 #include "Vector2.h"
@@ -12,7 +15,9 @@
 #include "PhysicsSystem.h"
 #include "PlaneActor.h"
 #include "HUD.h"
+#include "HUDHitPoint.h"
 
+class ElevatorDoor;
 using std::vector;
 
 enum class GameState
@@ -40,7 +45,7 @@ class Game
 	public:
 		bool initialize();
 		std::vector<std::vector<int>> loadLevel(const std::string& filename);
-	const std::vector<AABB>& getCubes() const { return cubes; }
+	
 		void load();
 		void loop();
 		void unload();
@@ -58,6 +63,8 @@ class Game
 		const vector<class UIScreen*>& getUIStack() { return UIStack; }
 		void pushUI(class UIScreen* screen);
 		HUD* getHUD() { return hud; }
+		EndPoint* getEnd(){ return endPoint;}
+		ElevatorActor* getElevator(){ return elevator;}
 
 		// Game-specific
 		void addPlane(class PlaneActor* plane);
@@ -67,6 +74,7 @@ class Game
 		vector<PlaneActor*>& getPlanes() { return planes; }
 		vector<CubeActor*>& getCubes() { return cubes; }
 		class FPSActor* getPlayer() { return fps; }
+		HUDHitPoint* getHpHUD() const{ return hpHUD; }
 
 	private:
 		void processInput();
@@ -92,5 +100,16 @@ class Game
 		class SpriteComponent* crosshair;
 		vector<PlaneActor*> planes;
 		vector<CubeActor*> cubes;
+		HUDHitPoint* hpHUD;
+		int previousHP = 4;
+		EndPoint* endPoint;
+		ElevatorActor* elevator;
+		ElevatorDoor* elevatorDoor;
+
+	public:
+		ElevatorDoor* getElevatorDoor() const
+		{
+			return elevatorDoor;
+		}
 	};
 
