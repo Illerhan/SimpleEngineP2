@@ -79,10 +79,10 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Blip.png", "Blip");
 	Assets::loadTexture(renderer, "Res\\Textures\\RadarArrow.png", "RadarArrow");
-	Assets::loadTexture(renderer, "Res\\Textures\\HitPoint0.png", "HitPoint");
-	Assets::loadTexture(renderer, "Res\\Textures\\Hp3.png", "HitPoint2");
-	Assets::loadTexture(renderer, "Res\\Textures\\Hp2.png", "HitPoint3");
-	Assets::loadTexture(renderer, "Res\\Textures\\Hp1.png", "HitPoint4");
+	Assets::loadTexture(renderer, "Res\\Textures\\heart4.png", "HitPoint");
+	Assets::loadTexture(renderer, "Res\\Textures\\heart3.png", "HitPoint2");
+	Assets::loadTexture(renderer, "Res\\Textures\\heart2.png", "HitPoint3");
+	Assets::loadTexture(renderer, "Res\\Textures\\heart1.png", "HitPoint4");
 	
 
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
@@ -133,8 +133,9 @@ void Game::load()
 	}
 	elevatorDoor = new ElevatorDoor();
 	elevatorDoor->rotateToNewForward(Vector3::negUnitZ);
-	elevatorDoor->setPosition(Vector3(2500,1000, 850.0f));
+	elevatorDoor->setPosition(Vector3(2500,1000, 650.0f));
 	elevatorDoor->setScale(cubeSize);
+	
 	for (size_t y = 0; y < level2.size(); ++y) {
 		for (size_t x = 0; x < level2[y].size(); ++x) {
 			if (level2[y][x] == 1) {

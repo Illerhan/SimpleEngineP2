@@ -211,15 +211,19 @@ void FPSActor::fixCollisions() {
 			finished = true;
 		}
 
-	const auto& elevator = getGame().getElevator();
-	const AABB& elevatorBox = elevator->getBox()->getWorldBox();
-	if (Collisions::intersect(playerBox, elevatorBox)) {
-		getGame().getElevatorDoor()->getMove()->setForwardSpeed(500.f);
-	}
+	
 
 	// Update position and box component
 	setPosition(pos);
 	boxComponent->onUpdateWorldTransform();
+
+	const auto& elevator = getGame().getElevator();
+	const AABB& elevatorBox = elevator->getBox()->getWorldBox();
+	if (Collisions::intersect(playerBox, elevatorBox)) {
+		getGame().getElevatorDoor()->getMove()->setForwardSpeed(500.f);
+		setPosition(Vector3(getPosition().x,getPosition().y,850.f));
+		
+	}
 }
 
 void FPSActor::loseHP()
