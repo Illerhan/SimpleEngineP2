@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "AABB.h"
+#include "ActivableDoor.h"
 #include "Actor.h"
 #include "CubeActor.h"
 #include "ElevatorActor.h"
@@ -16,6 +17,7 @@
 #include "PlaneActor.h"
 #include "HUD.h"
 #include "HUDHitPoint.h"
+#include "ShootButton.h"
 
 class ElevatorDoor;
 using std::vector;
@@ -71,10 +73,18 @@ class Game
 		void removePlane(class PlaneActor* plane);
 		void addCubes(class CubeActor* cube);
 		void removeCube(class CubeActor* cube);
+		void addDoor(class ActivableDoor* door);
+		void removeDoor(class ActivableDoor* door);
+		void addButton(class ShootButton* button);
+		void removeButton(class ShootButton* button);
+	
 		vector<PlaneActor*>& getPlanes() { return planes; }
 		vector<CubeActor*>& getCubes() { return cubes; }
 		class FPSActor* getPlayer() { return fps; }
 		HUDHitPoint* getHpHUD() const{ return hpHUD; }
+		ElevatorDoor* getElevatorDoor() const{return elevatorDoor;}
+		vector<ActivableDoor*>& getDoors() { return doors; }
+		vector<ShootButton*>& getButtons() { return buttons; }
 
 	private:
 		void processInput();
@@ -105,11 +115,8 @@ class Game
 		EndPoint* endPoint;
 		ElevatorActor* elevator;
 		ElevatorDoor* elevatorDoor;
-
-	public:
-		ElevatorDoor* getElevatorDoor() const
-		{
-			return elevatorDoor;
-		}
+		vector<ActivableDoor*> doors;
+		vector<ShootButton*> buttons;
+	
 	};
 

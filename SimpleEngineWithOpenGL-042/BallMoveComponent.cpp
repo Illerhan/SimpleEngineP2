@@ -37,10 +37,10 @@ void BallMoveComponent::update(float dt)
 		dir = Vector3::reflect(dir, info.normal);
 		owner.rotateToNewForward(dir);
 		// Did we hit a target?
-		TargetActor* target = dynamic_cast<TargetActor*>(info.actor);
-		if (target)
+		ShootButton* button = dynamic_cast<ShootButton*>(info.actor);
+		if (button)
 		{
-			static_cast<BallActor*>(&owner)->hitTarget();
+			static_cast<BallActor*>(&owner)->hitTarget(button);
 		}
 	}
 

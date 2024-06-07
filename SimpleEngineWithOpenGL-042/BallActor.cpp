@@ -1,8 +1,12 @@
 #include "BallActor.h"
+
+#include <valarray>
+
 #include "MeshComponent.h"
 #include "Assets.h"
 
 #include "BallMoveComponent.h"
+#include "Game.h"
 
 BallActor::BallActor() : Actor(), lifetimeSpan(2.0f), audio(nullptr), ballMove(nullptr)
 {
@@ -28,7 +32,8 @@ void BallActor::setPlayer(Actor* player)
 	ballMove->setPlayer(player);
 }
 
-void BallActor::hitTarget()
+void BallActor::hitTarget(ShootButton* button)
 {
-
+	std::cout << button->getPosition().x << std::endl;
+	button->getDoor()->setState(ActorState::Dead);
 }

@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="ActivableDoor.cpp" />
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="BackgroundSpriteComponent.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="RendererOGL.cpp" />
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShootButton.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereActor.cpp" />
     <ClCompile Include="Spline.cpp" />
@@ -214,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="ActivableDoor.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="BackgroundSpriteComponent.h" />
@@ -266,6 +269,7 @@
     <ClInclude Include="RendererOGL.h" />
     <ClInclude Include="Assets.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShootButton.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereActor.h" />
     <ClInclude Include="Spline.h" />

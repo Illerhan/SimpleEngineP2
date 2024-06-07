@@ -4,6 +4,7 @@
 #include <sstream>
 #include <valarray>
 
+#include "ActivableDoor.h"
 #include "Actor.h"
 #include "Timer.h"
 #include "Assets.h"
@@ -18,6 +19,7 @@
 #include "HUDHitPoint.h"
 #include "TargetActor.h"
 #include "PauseScreen.h"
+#include "ShootButton.h"
 
 bool Game::initialize()
 {
@@ -109,7 +111,8 @@ void Game::load()
 	const float startY = -5000.f;
 
 	for (size_t y = 0; y < level.size(); ++y) {
-		for (size_t x = 0; x < level[y].size(); ++x) {
+		for (size_t x = 0; x < level[y].size(); ++x)
+		{
 			if (level[y][x] == 1) {
 				CubeActor* cube = new CubeActor();
 				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
@@ -128,6 +131,13 @@ void Game::load()
 				elevator->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
 				elevator->setScale(Vector3(1,1,1));
 				std::cout << elevator->getPosition().x << " : "<< elevator->getPosition().y << std::endl;
+			
+			} else if (level[y][x] == 5) {
+				ActivableDoor* door = new ActivableDoor();
+				door->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
+				door->setScale(cubeSize);
+				ShootButton* button = new ShootButton(door);
+				button->setPosition(Vector3(door->getPosition().x + 240,door->getPosition().y + 500, 150));
 			}
 		}
 	}
@@ -482,4 +492,26 @@ void Game::removeCube(CubeActor* cube)
 {
 	auto iter = std::find(begin(cubes), end(cubes), cube);
 	cubes.erase(iter);
+}
+
+void Game::addDoor(ActivableDoor* door)
+{
+	doors.emplace_back(door);
+}
+
+void Game::removeDoor(ActivableDoor* door)
+{
+	auto iter = std::find(begin(doors), end(doors), door);
+	doors.erase(iter);
+}
+
+void Game::addButton(ShootButton* button)
+{
+	buttons.emplace_back(button);
+}
+
+void Game::removeButton(ShootButton* button)
+{
+	auto iter = std::find(begin(buttons), end(buttons), button);
+	buttons.erase(iter);
 }
