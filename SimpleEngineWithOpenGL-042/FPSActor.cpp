@@ -189,7 +189,6 @@ void FPSActor::fixCollisions() {
 	for (auto pa : planes) {
 		const AABB& planeBox = pa->getBox()->getWorldBox();
 		if (Collisions::intersect(playerBox, planeBox)) {
-			std::cout << "Collide" << std::endl;
 			resolveCollision(playerBox, planeBox, pos);
 		}
 	}
@@ -199,7 +198,6 @@ void FPSActor::fixCollisions() {
 	for (const auto& cube : cubes) {
 		const AABB& cubeBox = cube->getBox()->getWorldBox();
 		if (Collisions::intersect(playerBox, cubeBox)) {
-			std::cout << "Collide" << std::endl;
 			resolveCollision(playerBox, cubeBox, pos);
 		}
 	}
@@ -222,7 +220,7 @@ void FPSActor::fixCollisions() {
 	if (Collisions::intersect(playerBox, elevatorBox)) {
 		getGame().getElevatorDoor()->getMove()->setForwardSpeed(500.f);
 		setPosition(Vector3(getPosition().x,getPosition().y,850.f));
-		
+		std::cout << "Collid with elevator" << std::endl;
 	}
 }
 
@@ -234,4 +232,9 @@ void FPSActor::loseHP()
 void FPSActor::setHP(int sHP)
 {
 	HP = sHP;
+}
+
+void FPSActor::setFinished(bool ended)
+{
+	finished = ended;
 }

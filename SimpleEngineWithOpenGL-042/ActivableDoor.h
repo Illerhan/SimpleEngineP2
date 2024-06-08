@@ -1,7 +1,7 @@
 #pragma once
 #include "CubeActor.h"
 
-class ActivableDoor : public CubeActor
+class ActivableDoor : public Actor
 {
 public:
     ActivableDoor();

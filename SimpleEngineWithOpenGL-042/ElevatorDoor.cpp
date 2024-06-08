@@ -9,7 +9,7 @@ ElevatorDoor::ElevatorDoor()
 {
     moveC = new MoveComponent(this);
     MeshComponent* mc = new MeshComponent(this);
-    Mesh* mesh = &Assets::getMesh("Mesh_Cube");
+    Mesh* mesh = &Assets::getMesh("Mesh_Door");
     mc->setMesh(*mesh);
     box = new BoxComponent(this);
     box->setObjectBox(mesh->getBox());

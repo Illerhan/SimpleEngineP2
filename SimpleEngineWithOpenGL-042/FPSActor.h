@@ -20,6 +20,8 @@ public:
 	void setHP(int sHP);
 	int getHP(){ return HP;}
 	int getMaxHP(){ return maxHP;}
+	bool getFiished() { return finished; }
+	void setFinished(bool restart); 
 
 private:
 	class MoveComponent* moveComponent;

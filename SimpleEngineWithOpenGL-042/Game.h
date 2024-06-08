@@ -77,7 +77,8 @@ class Game
 		void removeDoor(class ActivableDoor* door);
 		void addButton(class ShootButton* button);
 		void removeButton(class ShootButton* button);
-	
+		void respawnActors();
+
 		vector<PlaneActor*>& getPlanes() { return planes; }
 		vector<CubeActor*>& getCubes() { return cubes; }
 		class FPSActor* getPlayer() { return fps; }
@@ -117,6 +118,9 @@ class Game
 		ElevatorDoor* elevatorDoor;
 		vector<ActivableDoor*> doors;
 		vector<ShootButton*> buttons;
-	
+		Vector3 startPosition;
+		Vector3 doorPosition;
+		vector<std::vector<int>> level;
+		vector<std::vector<int>> level2;
 	};
 

@@ -179,6 +179,7 @@
     <ClCompile Include="KeyboardState.cpp" />
     <ClCompile Include="LineSegment.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LoseScreen.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
@@ -251,6 +253,7 @@
     <ClInclude Include="KeyboardState.h" />
     <ClInclude Include="LineSegment.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="LoseScreen.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Mesh.h" />
@@ -285,6 +288,7 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WinScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\Localization\English.gptext" />

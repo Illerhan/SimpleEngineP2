@@ -17,9 +17,16 @@
 #include "PlaneActor.h"
 #include "FPSActor.h"
 #include "HUDHitPoint.h"
+#include "LoseScreen.h"
+#include "MoveComponent.h"
 #include "TargetActor.h"
 #include "PauseScreen.h"
 #include "ShootButton.h"
+#include "WinScreen.h"
+
+const Vector3 CUBE_SIZE = Vector3(500.0f,500.f,600.f); // Example size for each cube
+const float START_X = -5000.f; // Starting position for the level
+const float START_Y = -5000.f;
 
 bool Game::initialize()
 {
@@ -65,6 +72,7 @@ void Game::load()
 
 	Assets::loadTexture(renderer, "Res\\Textures\\Default.png", "Default");
 	Assets::loadTexture(renderer, "Res\\Textures\\Cube.png", "Cube");
+	Assets::loadTexture(renderer, "Res\\Textures\\Door.png", "Door");
 	Assets::loadTexture(renderer, "Res\\Textures\\HealthBar.png", "HealthBar");
 	Assets::loadTexture(renderer, "Res\\Textures\\Plane.png", "Plane");
 	Assets::loadTexture(renderer, "Res\\Textures\\Radar.png", "Radar");
@@ -88,6 +96,7 @@ void Game::load()
 	
 
 	Assets::loadMesh("Res\\Meshes\\Cube.gpmesh", "Mesh_Cube");
+	Assets::loadMesh("Res\\Meshes\\Door.gpmesh", "Mesh_Door");
 	Assets::loadMesh("Res\\Meshes\\Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("Res\\Meshes\\Sphere.gpmesh", "Mesh_Sphere");
 	Assets::loadMesh("Res\\Meshes\\Rifle.gpmesh", "Mesh_Rifle");
@@ -99,43 +108,33 @@ void Game::load()
 
 
 	fps = new FPSActor();
-	//fps->setPosition(Vector3(0,0,100.f));
 	
 	// Load the level data from the file
-	std::vector<std::vector<int>> level = loadLevel("level.txt");
-	std::vector<std::vector<int>> level2 = loadLevel("level2.txt");
-
+	level = loadLevel("level.txt");
+	level2 = loadLevel("level2.txt");
+	endPoint = new EndPoint();
 	// Iterate through the level data and create CubeActors where needed
-	const Vector3 cubeSize = Vector3(500.0f,500.f,600.f); // Example size for each cube
-	const float startX = -5000.f; // Starting position for the level
-	const float startY = -5000.f;
 
 	for (size_t y = 0; y < level.size(); ++y) {
 		for (size_t x = 0; x < level[y].size(); ++x)
 		{
 			if (level[y][x] == 1) {
 				CubeActor* cube = new CubeActor();
-				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
-				cube->setScale(cubeSize);
-				//AABB cubeColl(Vector3(startX + x-0.5,startY + y  -0.5f,0),Vector3(startX+ x+ 0.5f, startY + y  + 0.5f, 0));
-				//cubes.push_back(cubeColl);
+				cube->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 0.0f));
+				cube->setScale(CUBE_SIZE);
 			} else if (level[y][x] == 2) {
 				std::cout << y << x << std::endl;
-				fps->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y,100.0f));
-			} else if (level[y][x] == 3) {
-				endPoint = new EndPoint();
-				endPoint->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
-				endPoint->setScale(Vector3(1,1,1));
+				startPosition = Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y,100.0f);
+				fps->setPosition(startPosition);
 			} else if (level[y][x] == 4) {
 				elevator = new ElevatorActor();
-				elevator->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
+				elevator->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 0.0f));
 				elevator->setScale(Vector3(1,1,1));
-				std::cout << elevator->getPosition().x << " : "<< elevator->getPosition().y << std::endl;
-			
+				doorPosition = Vector3(elevator->getPosition().x+500,elevator->getPosition().y,1500);
 			} else if (level[y][x] == 5) {
 				ActivableDoor* door = new ActivableDoor();
-				door->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 0.0f));
-				door->setScale(cubeSize);
+				door->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 0.0f));
+				door->setScale(Vector3(CUBE_SIZE.x, 250,CUBE_SIZE.z));
 				ShootButton* button = new ShootButton(door);
 				button->setPosition(Vector3(door->getPosition().x + 240,door->getPosition().y + 500, 150));
 			}
@@ -143,31 +142,32 @@ void Game::load()
 	}
 	elevatorDoor = new ElevatorDoor();
 	elevatorDoor->rotateToNewForward(Vector3::negUnitZ);
-	elevatorDoor->setPosition(Vector3(2500,1000, 650.0f));
-	elevatorDoor->setScale(cubeSize);
+	elevatorDoor->setPosition(doorPosition);
+	elevatorDoor->setScale(CUBE_SIZE);
 	
 	for (size_t y = 0; y < level2.size(); ++y) {
 		for (size_t x = 0; x < level2[y].size(); ++x) {
 			if (level2[y][x] == 1) {
 				CubeActor* cube = new CubeActor();
-				cube->setPosition(Vector3(startX + x * cubeSize.x, startY + y * cubeSize.y, 550));
-				cube->setScale(cubeSize);
-			} else if (level2[y][x] == 2) {
-				std::cout << y << x << std::endl;
-				//fps->setPosition(Vector3(x,y,75.f));
+				cube->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 900));
+				cube->setScale(CUBE_SIZE);
 			} else if (level2[y][x] == 3) {
-				// Handle level end if needed
+				endPoint->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 900.0f));
+				endPoint->setScale(Vector3(1,1,1));
+			} else if (level2[y][x] == 5)
+			{
+				ActivableDoor* door = new ActivableDoor();
+				door->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 900.f));
+				door->setScale(Vector3(CUBE_SIZE.x, 250,CUBE_SIZE.z));
+				ShootButton* button = new ShootButton(door);
+				button->setPosition(Vector3(door->getPosition().x + 240,door->getPosition().y + 500, 950.f));
 			}
 		}
 	}
 	
-	CubeActor* a = new CubeActor();
-	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
-	a->setScale(Vector3(100.0f,100.0f,100.0f));
-	
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
-	a->setRotation(q);
+
 
 	// Floor and walls
 
@@ -191,6 +191,17 @@ void Game::load()
 		{
 			PlaneActor* p = new PlaneActor();
 			p->setPosition(Vector3(start + i * size, start + j * size, 550.0f));
+		}
+	}
+	
+	// Setup floor 2
+
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j <19; j++)
+		{
+			PlaneActor* p = new PlaneActor();
+			p->setPosition(Vector3(start + i * size, start + j * size, 1200.0f));
 		}
 	}
 
@@ -252,32 +263,11 @@ void Game::load()
 	dir.direction = Vector3(0.0f, -0.707f, -0.707f);
 	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
-
-	// Create spheres with audio components playing different sounds
-	SphereActor* soundSphere = new SphereActor();
-	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
-	soundSphere->setScale(Vector3(1,1,1));
-
-
+	
 	// HUD
 	hud = new HUD();
 	hpHUD = new HUDHitPoint();
-	/*
-	Actor* crosshairActor = new Actor();
-	crosshairActor->setScale(2.0f);
-	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
-	*/
 
-	// Start music
-
-	TargetActor* t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 0.0f, 100.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 0.0f, 400.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, -500.0f, 200.0f));
-	t = new TargetActor();
-	t->setPosition(Vector3(1450.0f, 500.0f, 200.0f));
 }
 
 void Game::processInput()
@@ -329,6 +319,29 @@ void Game::update(float dt)
 	// 	previousHP = getPlayer()->getHP();
 	// 	hpHUD->close();
 	// }
+
+	if (fps->getFiished())
+	{
+		new WinScreen();
+		fps->setFinished(false);
+		
+		respawnActors();
+		
+		fps->setPosition(startPosition);
+		fps->rotateToNewForward(Vector3(0,1,0));
+		return;
+	}
+
+	if (fps->getHP() <= 0)
+	{
+		new LoseScreen();
+		respawnActors();
+		
+		fps->setPosition(startPosition);
+		fps->rotateToNewForward(Vector3(0,1,0));
+		return;
+	}
+
 	
 	if (state == GameState::Gameplay)
 	{
@@ -514,4 +527,48 @@ void Game::removeButton(ShootButton* button)
 {
 	auto iter = std::find(begin(buttons), end(buttons), button);
 	buttons.erase(iter);
+}
+
+void Game::respawnActors()
+{
+
+	fps->setHP(4);
+	
+	for (auto button : buttons)
+	{
+		button->setState(Actor::ActorState::Dead);
+	}
+	
+	for (auto door : doors)
+	{
+		door->setState(Actor::ActorState::Dead);
+	}
+	
+	
+	for (size_t y = 0; y < level.size(); ++y) {
+		for (size_t x = 0; x < level[y].size(); ++x)
+		{
+			if (level[y][x] == 5) {
+				ActivableDoor* door = new ActivableDoor();
+				door->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 0.0f));
+				door->setScale(Vector3(CUBE_SIZE.x, 250,CUBE_SIZE.z));
+				ShootButton* button = new ShootButton(door);
+				button->setPosition(Vector3(door->getPosition().x + 240,door->getPosition().y + 500, 150));
+			}
+		}
+	}
+	elevatorDoor->getMove()->setForwardSpeed(0);
+	elevatorDoor->setPosition(doorPosition);
+	for (size_t y = 0; y < level2.size(); ++y) {
+		for (size_t x = 0; x < level2[y].size(); ++x) {
+			if (level2[y][x] == 5)
+			{
+				ActivableDoor* door = new ActivableDoor();
+				door->setPosition(Vector3(START_X + x * CUBE_SIZE.x, START_Y + y * CUBE_SIZE.y, 900.f));
+				door->setScale(Vector3(CUBE_SIZE.x, 250,CUBE_SIZE.z));
+				ShootButton* button = new ShootButton(door);
+				button->setPosition(Vector3(door->getPosition().x + 240,door->getPosition().y + 500, 950.f));
+			}
+		}
+	}
 }
