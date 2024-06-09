@@ -86,6 +86,7 @@ class Game
 		ElevatorDoor* getElevatorDoor() const{return elevatorDoor;}
 		vector<ActivableDoor*>& getDoors() { return doors; }
 		vector<ShootButton*>& getButtons() { return buttons; }
+		Vector3 getCubeSize() const{return CUBE_SIZE;}
 
 	private:
 		void processInput();
@@ -122,5 +123,7 @@ class Game
 		Vector3 doorPosition;
 		vector<std::vector<int>> level;
 		vector<std::vector<int>> level2;
+		const Vector3 CUBE_SIZE = Vector3(500.0f,500.f,600.f);
+
 	};
 

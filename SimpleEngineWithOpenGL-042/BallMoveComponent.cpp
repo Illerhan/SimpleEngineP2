@@ -42,6 +42,17 @@ void BallMoveComponent::update(float dt)
 		{
 			static_cast<BallActor*>(&owner)->hitTarget(button);
 		}
+
+		
+		Vector3 cubeSize = getOwner().getGame().getCubeSize();
+		ElevatorActor* elevator = dynamic_cast<ElevatorActor*>(info.actor);
+		if (elevator && (elevator->getPosition().x - cubeSize.x + 50 < player->getPosition().x)
+			&& (player->getPosition().x < elevator->getPosition().x + cubeSize.x - 50)
+			&& (elevator->getPosition().y - cubeSize.y/2 < player->getPosition().y)
+			&& (player->getPosition().y < elevator->getPosition().y + cubeSize.y/2))
+		{
+			static_cast<BallActor*>(&owner)->hitElevator();
+		}
 	}
 
 	// Base class update moves based on forward speed

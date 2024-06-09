@@ -28,8 +28,8 @@ void HUDHitPoint::update(float dt)
 
 void HUDHitPoint::draw(Shader& shader)
 {
-	const Vector2 hitPointPosition {-475.f,-350.f};
-	drawTexture(shader, hitPoint, hitPointPosition,0.05f);
+	const Vector2 hitPointPosition {-425.f,-300.f};
+	drawTexture(shader, hitPoint, hitPointPosition,0.1f);
 }
 
 void HUDHitPoint::updateHP(float dt)

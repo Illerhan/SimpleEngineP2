@@ -9,10 +9,10 @@ ShootButton::ShootButton(ActivableDoor* Adoor) : door()
 {
     setRotation(Quaternion(Vector3::unitZ, Maths::pi));
     MeshComponent* mc = new MeshComponent(this);
-    mc->setMesh(Assets::getMesh("Mesh_Target"));
+    mc->setMesh(Assets::getMesh("Mesh_HexaButton"));
     // Add collision box
     BoxComponent* bc = new BoxComponent(this);
-    bc->setObjectBox(Assets::getMesh("Mesh_Target").getBox());
+    bc->setObjectBox(Assets::getMesh("Mesh_HexaButton").getBox());
     getGame().addButton(this);
     door = Adoor;
 }

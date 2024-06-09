@@ -107,6 +107,7 @@ void FPSActor::actorInput(const InputState& inputState)
 	{
 		strafeSpeed += 1000.0f;
 	}
+	
 	moveComponent->setForwardSpeed(forwardSpeed);
 	moveComponent->setStrafeSpeed(strafeSpeed);
 	// Mouse mouvement
@@ -202,6 +203,14 @@ void FPSActor::fixCollisions() {
 		}
 	}
 
+	const auto& doors = getGame().getDoors();
+	for (const auto& door : doors) {
+		const AABB& doorBox = door->getBox()->getWorldBox();
+		if (Collisions::intersect(playerBox, doorBox)) {
+			resolveCollision(playerBox, doorBox, pos);
+		}
+	}
+
 	const auto& end = getGame().getEnd();
 		const AABB& endBox = end->getBox()->getWorldBox();
 		if (Collisions::intersect(playerBox, endBox)) {
@@ -215,13 +224,7 @@ void FPSActor::fixCollisions() {
 	setPosition(pos);
 	boxComponent->onUpdateWorldTransform();
 
-	const auto& elevator = getGame().getElevator();
-	const AABB& elevatorBox = elevator->getBox()->getWorldBox();
-	if (Collisions::intersect(playerBox, elevatorBox)) {
-		getGame().getElevatorDoor()->getMove()->setForwardSpeed(500.f);
-		setPosition(Vector3(getPosition().x,getPosition().y,850.f));
-		std::cout << "Collid with elevator" << std::endl;
-	}
+
 }
 
 void FPSActor::loseHP()

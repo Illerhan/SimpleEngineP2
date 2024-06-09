@@ -7,7 +7,7 @@
 ElevatorActor::ElevatorActor()
 {
     MeshComponent* mc = new MeshComponent(this);
-    Mesh* mesh = &Assets::getMesh("Mesh_Sphere");
+    Mesh* mesh = &Assets::getMesh("Mesh_ElevatorButton");
     mc->setMesh(*mesh);
     box = new BoxComponent(this);
     box->setObjectBox(mesh->getBox());
